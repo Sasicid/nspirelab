@@ -1,0 +1,1616 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NspireLab — Códigos para TI-Nspire CX CAS</title>
+  <meta name="description" content="Programas paso a paso para TI-Nspire CX CAS hechos por un estudiante de Ingeniería Civil: cálculo, álgebra lineal, estática, resistencia de materiales y más. Entrega inmediata." />
+  <meta name="keywords" content="TI-Nspire, CX CAS, códigos calculadora, programas TI-Nspire, ingeniería civil, cálculo paso a paso, estática, álgebra lineal, resistencia de materiales" />
+  <meta property="og:title" content="NspireLab — Códigos para TI-Nspire CX CAS" />
+  <meta property="og:description" content="Tu calculadora al máximo nivel: programas paso a paso para cada ramo de ingeniería." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <style>
+/* ============================================================
+   NspireLab — hoja de estilos
+   Tema: azul marino profundo + cian, estética "blueprint"
+   ============================================================ */
+
+:root {
+  --bg-0: #060b14;        /* fondo más profundo */
+  --bg-1: #0a1220;        /* fondo secciones */
+  --bg-2: #0e1a2e;        /* paneles */
+  --card: #0d1726;
+  --border: #1c2b42;
+  --cyan: #22d3ee;
+  --cyan-soft: rgba(34, 211, 238, 0.12);
+  --cyan-line: rgba(34, 211, 238, 0.35);
+  --orange: #fb923c;
+  --green: #34d399;
+  --text-1: #e8eef7;
+  --text-2: #9fb0c7;
+  --muted: #64748b;
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+  --font-display: "Space Grotesk", "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --radius: 16px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg-0);
+  color: var(--text-1);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+::selection { background: var(--cyan); color: var(--bg-0); }
+
+h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.02em; }
+code { font-family: var(--font-mono); color: var(--cyan); background: var(--cyan-soft); padding: 1px 6px; border-radius: 5px; font-size: 0.9em; }
+a { color: inherit; text-decoration: none; }
+
+/* ---------- utilidades ---------- */
+.mono-tag {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+}
+.mono-tag.accent { color: var(--cyan); }
+.accent { color: var(--cyan); }
+.glow { text-shadow: 0 0 28px rgba(34, 211, 238, 0.45); }
+.thin { color: var(--text-2); font-style: italic; }
+
+/* ---------- botones ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 700;
+  font-size: 0.875rem;
+  border-radius: 11px;
+  padding: 11px 20px;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s;
+  font-family: var(--font-body);
+}
+.btn-lg { padding: 15px 28px; font-size: 0.95rem; }
+.btn-cta {
+  background: linear-gradient(135deg, #f97316, #fb923c);
+  color: #160a02;
+  box-shadow: 0 6px 24px rgba(249, 115, 22, 0.28);
+}
+.btn-cta:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(249, 115, 22, 0.4); }
+.btn-outline {
+  background: transparent;
+  color: var(--text-1);
+  border: 1px solid var(--border);
+}
+.btn-outline:hover { border-color: var(--cyan-line); color: var(--cyan); background: var(--cyan-soft); }
+.btn-buy {
+  background: linear-gradient(135deg, #0891b2, #22d3ee);
+  color: #03222b;
+  width: 100%;
+  justify-content: center;
+}
+.btn-buy:hover { transform: translateY(-2px); box-shadow: 0 8px 26px rgba(34, 211, 238, 0.3); }
+.btn-ghost {
+  background: var(--bg-2);
+  color: var(--text-2);
+  border: 1px solid var(--border);
+  width: 100%;
+  justify-content: center;
+}
+.btn-ghost:hover { color: var(--text-1); border-color: var(--cyan-line); }
+
+/* ---------- header ---------- */
+#header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 clamp(16px, 4vw, 36px);
+  height: 68px;
+  background: rgba(6, 11, 20, 0.72);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s;
+}
+#header.scrolled { border-bottom-color: var(--border); }
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand-logo {
+  display: grid; place-items: center;
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: var(--cyan-soft);
+  border: 1px solid var(--cyan-line);
+  color: var(--cyan);
+}
+.brand-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+}
+#header nav { display: flex; gap: 28px; }
+#header nav a {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+  transition: color 0.2s;
+}
+#header nav a:hover { color: var(--cyan); }
+.btn-header { padding: 9px 16px; font-size: 0.8rem; }
+
+/* ---------- hero ---------- */
+#hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 110px clamp(16px, 4vw, 36px) 70px;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(700px 420px at 18% 25%, rgba(34, 211, 238, 0.07), transparent 65%),
+    radial-gradient(560px 380px at 82% 70%, rgba(251, 146, 60, 0.06), transparent 65%),
+    linear-gradient(160deg, var(--bg-0), var(--bg-1) 55%, var(--bg-2));
+  pointer-events: none;
+}
+.hero-bg::after {
+  content: "";
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(34, 211, 238, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 211, 238, 0.05) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 30%, transparent 75%);
+}
+.hero-inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
+  max-width: 1180px;
+  margin: 0 auto;
+  width: 100%;
+}
+.badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  margin-bottom: 28px;
+}
+.ping { position: relative; display: inline-flex; width: 8px; height: 8px; }
+.ping-anim {
+  position: absolute; inset: 0;
+  border-radius: 50%;
+  background: var(--cyan);
+  opacity: 0.6;
+  animation: ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+.ping-dot { position: relative; width: 8px; height: 8px; border-radius: 50%; background: var(--cyan); }
+@keyframes ping { 75%, 100% { transform: scale(2.4); opacity: 0; } }
+.badge-pill .mono-tag { color: var(--cyan); }
+
+#hero h1 {
+  font-size: clamp(2.2rem, 5.2vw, 3.9rem);
+  font-weight: 700;
+  line-height: 1.08;
+  margin-bottom: 22px;
+}
+.hero-sub {
+  color: var(--text-2);
+  font-size: clamp(0.95rem, 1.4vw, 1.08rem);
+  max-width: 560px;
+  margin-bottom: 32px;
+}
+.hero-sub strong { color: var(--text-1); }
+.hero-stats { display: flex; align-items: center; gap: 28px; margin-bottom: 36px; flex-wrap: wrap; }
+.stat-num {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+  margin-top: 2px;
+}
+.stat-div { width: 1px; height: 36px; background: var(--border); }
+.hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 28px; }
+.trust-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.trust-chip {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--text-2);
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 7px 13px;
+  border-radius: 999px;
+}
+
+/* mockup calculadora */
+.hero-visual { display: flex; justify-content: center; }
+.calc-frame { position: relative; width: min(320px, 80vw); }
+.calc-svg {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.55)) drop-shadow(0 0 40px rgba(34, 211, 238, 0.08));
+}
+.calc-svg .mono, .calc-svg text { font-family: var(--font-mono); }
+.float-card {
+  position: absolute;
+  background: rgba(13, 23, 38, 0.92);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+}
+.float-tr { top: 4%; right: -10%; }
+.float-bl { bottom: 8%; left: -14%; flex-direction: row; align-items: center; gap: 10px; }
+.float-sub { font-size: 0.68rem; color: var(--muted); }
+.pulse-bar {
+  width: 28px; height: 4px;
+  border-radius: 4px;
+  background: var(--cyan);
+  animation: pulsebar 1.6s ease-in-out infinite;
+}
+@keyframes pulsebar { 50% { opacity: 0.35; } }
+.video-frame {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 18px;
+  border: 1px solid var(--cyan-line);
+  overflow: hidden;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.5);
+}
+.video-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+.scroll-hint {
+  position: absolute;
+  bottom: 22px; left: 50%;
+  transform: translateX(-50%);
+  color: var(--muted);
+  animation: bounce 2.2s infinite;
+}
+@keyframes bounce { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 8px); } }
+
+/* ---------- secciones ---------- */
+.section { position: relative; padding: clamp(64px, 9vw, 110px) clamp(16px, 4vw, 36px); }
+.section::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--cyan-line), transparent);
+  opacity: 0.5;
+}
+.section:nth-of-type(odd) { background: var(--bg-1); }
+.section.slim { padding-top: clamp(36px, 5vw, 60px); padding-bottom: clamp(36px, 5vw, 60px); }
+.section-inner { max-width: 1180px; margin: 0 auto; }
+.section-inner.narrow { max-width: 820px; }
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 32px;
+  margin-bottom: clamp(36px, 5vw, 56px);
+  flex-wrap: wrap;
+}
+.section-head h2 {
+  font-size: clamp(1.7rem, 3.4vw, 2.5rem);
+  font-weight: 700;
+  margin-top: 14px;
+}
+.section-side {
+  max-width: 360px;
+  color: var(--text-2);
+  font-size: 0.9rem;
+  border-left: 2px solid var(--cyan-line);
+  padding-left: 18px;
+}
+
+/* ---------- filtros ---------- */
+.filters { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 32px; }
+.filter-chip {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-2);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 9px 18px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.filter-chip:hover { border-color: var(--cyan-line); color: var(--cyan); }
+.filter-chip.active {
+  background: var(--cyan-soft);
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+
+/* ---------- grid de productos ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  gap: 18px;
+}
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 26px;
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+}
+.product {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+  overflow: hidden;
+}
+.product:hover {
+  border-color: var(--cyan-line);
+  transform: translateY(-4px);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.4);
+}
+.product.destacado { border-color: rgba(251, 146, 60, 0.5); }
+.product.destacado .estado { margin-right: 52px; }
+.product.destacado::before {
+  content: "★ MEJOR VALOR";
+  position: absolute;
+  top: 14px; right: -34px;
+  transform: rotate(38deg);
+  background: linear-gradient(135deg, #f97316, #fb923c);
+  color: #160a02;
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  padding: 5px 38px;
+}
+.product-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 18px; }
+.product-icon {
+  width: 48px; height: 48px;
+  display: grid; place-items: center;
+  border-radius: 13px;
+  background: var(--cyan-soft);
+  border: 1px solid var(--cyan-line);
+  color: var(--cyan);
+  flex-shrink: 0;
+}
+.estado {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  padding: 5px 11px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.estado::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.estado.disponible { color: var(--green); background: rgba(52, 211, 153, 0.1); }
+.estado.beta { color: var(--orange); background: rgba(251, 146, 60, 0.1); }
+.estado.proximamente { color: var(--muted); background: rgba(100, 116, 139, 0.12); }
+.product-cat { display: block; margin-bottom: 7px; }
+.product h3 { font-size: 1.18rem; font-weight: 700; margin-bottom: 9px; }
+.product-desc { font-size: 0.87rem; color: var(--text-2); margin-bottom: 16px; }
+.product-feats { list-style: none; margin-bottom: 20px; display: grid; gap: 7px; }
+.product-feats li {
+  font-size: 0.81rem;
+  color: var(--text-2);
+  display: flex;
+  gap: 9px;
+  align-items: baseline;
+}
+.product-feats li::before { content: "▸"; color: var(--cyan); font-size: 0.75rem; }
+.product-feats li.more { color: var(--muted); font-style: italic; }
+.product-feats li.more::before { content: "+"; }
+.product-bottom {
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+}
+.price-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 14px; }
+.price {
+  font-family: var(--font-display);
+  font-size: 1.55rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+.price-before { color: var(--muted); text-decoration: line-through; font-size: 0.9rem; }
+.price-note { font-family: var(--font-mono); font-size: 0.62rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+.product-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.product-actions .full { grid-column: 1 / -1; }
+
+/* ---------- banner a medida ---------- */
+.banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+  background: linear-gradient(135deg, rgba(34, 211, 238, 0.08), rgba(13, 23, 38, 0.6));
+  border: 1px solid var(--cyan-line);
+  border-radius: 22px;
+  padding: clamp(28px, 4vw, 44px);
+}
+.banner h3 { font-size: clamp(1.3rem, 2.4vw, 1.7rem); margin: 12px 0 10px; }
+.banner p { color: var(--text-2); max-width: 520px; font-size: 0.92rem; }
+
+/* ---------- cómo funciona ---------- */
+.how-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 18px;
+  align-items: start;
+}
+.how-steps { display: grid; gap: 14px; }
+.step { display: flex; gap: 22px; align-items: flex-start; }
+.step:hover { border-color: var(--cyan-line); }
+.step-num {
+  font-family: var(--font-mono);
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: var(--cyan);
+  width: 48px; height: 48px;
+  display: grid; place-items: center;
+  background: var(--bg-0);
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  flex-shrink: 0;
+}
+.step h3 { font-size: 1.05rem; margin-bottom: 7px; }
+.step p { font-size: 0.87rem; color: var(--text-2); margin-bottom: 12px; }
+.step strong { color: var(--text-1); }
+.chip-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.63rem;
+  font-weight: 700;
+  color: var(--muted);
+  background: var(--bg-0);
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.chip-line .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); }
+.how-side { display: grid; gap: 14px; }
+.compat h4 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 16px;
+  color: var(--text-1);
+}
+.compat h4 svg { color: var(--cyan); }
+.compat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(28, 43, 66, 0.6);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-2);
+}
+.compat-row:last-of-type { border-bottom: 0; }
+.compat-row .ok { color: var(--green); font-weight: 800; }
+.compat-row .no { color: var(--muted); font-weight: 800; }
+.compat-row .warn { color: var(--orange); font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; }
+.compat-note { font-size: 0.78rem; color: var(--muted); margin-top: 14px; }
+.highlight {
+  background: linear-gradient(160deg, rgba(34, 211, 238, 0.08), var(--card));
+  border-color: var(--cyan-line);
+}
+.highlight .big-num {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  margin: 8px 0 4px;
+}
+.highlight p { color: var(--text-2); font-size: 0.86rem; }
+
+/* ---------- FAQ ---------- */
+.faq-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  transition: border-color 0.25s;
+}
+.faq-item.open { border-color: var(--cyan-line); }
+.faq-q {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  background: none;
+  border: none;
+  color: var(--text-1);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.94rem;
+  text-align: left;
+  padding: 19px 22px;
+  cursor: pointer;
+}
+.faq-q .icon {
+  font-family: var(--font-mono);
+  color: var(--cyan);
+  font-size: 1.1rem;
+  transition: transform 0.25s;
+  flex-shrink: 0;
+}
+.faq-item.open .faq-q .icon { transform: rotate(45deg); }
+.faq-a {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+.faq-a-inner {
+  padding: 0 22px 20px;
+  color: var(--text-2);
+  font-size: 0.87rem;
+}
+
+/* ---------- contacto ---------- */
+.contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.contact-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.contact-card:hover { border-color: var(--cyan-line); transform: translateY(-3px); }
+.contact-card svg { color: var(--cyan); flex-shrink: 0; }
+.contact-card h3 { font-size: 1rem; margin-bottom: 3px; }
+.contact-card p { font-size: 0.8rem; color: var(--text-2); }
+.contact-card .arrow { margin-left: auto; color: var(--muted); font-size: 1.1rem; transition: transform 0.2s, color 0.2s; }
+.contact-card:hover .arrow { transform: translateX(4px); color: var(--cyan); }
+
+/* ---------- footer ---------- */
+footer { background: var(--bg-0); border-top: 1px solid var(--border); padding: 48px clamp(16px, 4vw, 36px) 28px; }
+.footer-inner {
+  max-width: 1180px;
+  margin: 0 auto 36px;
+  display: flex;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.footer-brand p { color: var(--muted); font-size: 0.84rem; margin-top: 8px; max-width: 320px; }
+.footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+.footer-links a {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+}
+.footer-links a:hover { color: var(--cyan); }
+.footer-legal {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding-top: 22px;
+  border-top: 1px solid rgba(28, 43, 66, 0.5);
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.footer-legal p { color: var(--muted); font-size: 0.72rem; }
+
+/* ---------- modal ---------- */
+.modal-backdrop[hidden] { display: none; }
+.modal-backdrop {
+  position: fixed; inset: 0;
+  z-index: 100;
+  background: rgba(4, 8, 15, 0.8);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadein 0.2s ease;
+}
+@keyframes fadein { from { opacity: 0; } }
+.modal {
+  position: relative;
+  background: var(--bg-1);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  width: min(720px, 100%);
+  max-height: min(86vh, 900px);
+  overflow-y: auto;
+  animation: slideup 0.25s ease;
+}
+@keyframes slideup { from { transform: translateY(24px); opacity: 0; } }
+.modal-close {
+  position: sticky;
+  top: 14px;
+  margin-left: calc(100% - 52px);
+  width: 38px; height: 38px;
+  display: grid; place-items: center;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  color: var(--text-2);
+  font-size: 0.95rem;
+  cursor: pointer;
+  z-index: 5;
+  transition: all 0.2s;
+}
+.modal-close:hover { color: var(--text-1); border-color: var(--cyan-line); }
+.modal-body { padding: 0 clamp(22px, 4vw, 40px) clamp(26px, 4vw, 40px); margin-top: -24px; }
+.modal-head { display: flex; gap: 18px; align-items: center; margin-bottom: 20px; }
+.modal-head .product-icon { width: 56px; height: 56px; }
+.modal-head h2 { font-size: clamp(1.3rem, 3vw, 1.7rem); }
+.modal-tags { display: flex; gap: 10px; align-items: center; margin-top: 6px; flex-wrap: wrap; }
+.modal-desc { color: var(--text-2); font-size: 0.92rem; margin-bottom: 24px; }
+.modal-video { margin-bottom: 24px; }
+.modal-video .video-frame { border-radius: 14px; }
+.modal-section-title {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--cyan);
+  margin-bottom: 14px;
+}
+.modal-feats {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 10px;
+  margin-bottom: 26px;
+}
+.modal-feats li {
+  font-size: 0.85rem;
+  color: var(--text-2);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 11px 14px;
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+}
+.modal-feats li::before { content: "✓"; color: var(--green); font-weight: 800; }
+.modal-ramos { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 26px; }
+.ramo-chip {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--text-2);
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  padding: 6px 13px;
+  border-radius: 999px;
+}
+.modal-buy {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  background: var(--card);
+  border: 1px solid var(--cyan-line);
+  border-radius: 16px;
+  padding: 22px 26px;
+}
+.modal-buy .price { font-size: 1.9rem; }
+.modal-buy .btn { min-width: 220px; }
+
+/* ---------- animación reveal ---------- */
+.reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 920px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-visual { order: -1; margin-top: 10px; }
+  .calc-frame { width: min(240px, 70vw); }
+  .float-tr { right: -16%; }
+  .float-bl { left: -18%; }
+  .how-grid { grid-template-columns: 1fr; }
+  #header nav { display: none; }
+}
+@media (max-width: 560px) {
+  .float-card { display: none; }
+  .product-actions { grid-template-columns: 1fr; }
+  .modal-buy { justify-content: center; text-align: center; }
+  .btn-header span { display: none; }
+  .btn-header { padding: 9px 12px; }
+}
+
+</style>
+</head>
+<body>
+
+<header id="header">
+  <a class="brand" href="#hero" aria-label="Volver al inicio">
+    <span class="brand-logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="22" height="22">
+        <rect x="5" y="2.5" width="14" height="19" rx="2.5"/>
+        <rect x="7.5" y="5" width="9" height="5" rx="1"/>
+        <circle cx="12" cy="13.5" r="1.6"/>
+        <path d="M8 17h.01M12 17h.01M16 17h.01M8 19.2h.01M12 19.2h.01M16 19.2h.01" stroke-linecap="round" stroke-width="2"/>
+      </svg>
+    </span>
+    <span class="brand-name" data-config="marca">NspireLab</span>
+  </a>
+  <nav aria-label="Navegación principal">
+    <a href="#catalogo">Catálogo</a>
+    <a href="#como-funciona">Instalación</a>
+    <a href="#faq">Preguntas</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+  <a class="btn btn-cta btn-header" data-whatsapp="Hola! Vi la página de códigos para TI-Nspire y quiero más información 🙌" href="#" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M17.5 14.4c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.42.25-.7.25-1.3.18-1.42-.07-.12-.27-.2-.57-.35z"/><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.35A10 10 0 1 0 12 2zm0 18.2c-1.5 0-2.97-.4-4.25-1.15l-.3-.18-3.07.83.84-3-.2-.31A8.2 8.2 0 1 1 12 20.2z"/></svg>
+    <span>Hablemos</span>
+  </a>
+</header>
+
+<main>
+  <!-- ============ HERO ============ -->
+  <section id="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <div class="badge-pill reveal">
+          <span class="ping"><span class="ping-anim"></span><span class="ping-dot"></span></span>
+          <span class="mono-tag" id="hero-badge">Catálogo en crecimiento — nuevos códigos cada semestre</span>
+        </div>
+        <h1 class="reveal">Tu <span class="accent glow">TI-Nspire CX CAS</span><br/>al nivel de la <span class="thin">ingeniería</span></h1>
+        <p class="hero-sub reveal">Programas que resuelven <strong>paso a paso</strong> los problemas de tus ramos — cálculo, álgebra lineal, estática y más — directamente en la calculadora, sin PC. Hechos por un estudiante de Ingeniería Civil que sabe exactamente lo que se pregunta en las pruebas.</p>
+        <div class="hero-stats reveal">
+          <div class="stat"><p class="stat-num" id="stat-programas">—</p><p class="stat-label">Programas</p></div>
+          <div class="stat-div"></div>
+          <div class="stat"><p class="stat-num" id="stat-ramos">—</p><p class="stat-label">Ramos cubiertos</p></div>
+          <div class="stat-div"></div>
+          <div class="stat"><p class="stat-num">100%</p><p class="stat-label">En calculadora</p></div>
+        </div>
+        <div class="hero-ctas reveal">
+          <a href="#catalogo" class="btn btn-cta btn-lg">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12"/></svg>
+            Ver catálogo
+          </a>
+          <a href="#como-funciona" class="btn btn-outline btn-lg">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+            Cómo se instala
+          </a>
+        </div>
+        <div class="trust-row reveal">
+          <span class="trust-chip">⚡ Entrega el mismo día</span>
+          <span class="trust-chip">📲 Soporte directo por WhatsApp</span>
+          <span class="trust-chip">🔁 Reenvío gratis si pierdes el archivo</span>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal" id="hero-visual">
+        <!-- Mockup de calculadora (se reemplaza por video si config.videoDestacado tiene un ID de YouTube) -->
+        <div class="calc-frame">
+          <svg viewBox="0 0 340 560" class="calc-svg" role="img" aria-label="Calculadora TI-Nspire mostrando un programa paso a paso">
+            <defs>
+              <linearGradient id="bodyGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#15233b"/><stop offset="1" stop-color="#0b1422"/>
+              </linearGradient>
+              <linearGradient id="screenGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#0b1626"/><stop offset="1" stop-color="#081020"/>
+              </linearGradient>
+            </defs>
+            <rect x="10" y="8" width="320" height="544" rx="28" fill="url(#bodyGrad)" stroke="#27395a" stroke-width="2"/>
+            <rect x="32" y="34" width="276" height="190" rx="10" fill="url(#screenGrad)" stroke="#2dd4ee55" stroke-width="1.5"/>
+            <!-- pantalla -->
+            <text x="46" y="60" class="scr mono" fill="#67e8f9" font-size="12">▸ ALGEBRA LINEAL v1.2</text>
+            <line x1="46" y1="70" x2="294" y2="70" stroke="#1c2b42" stroke-width="1"/>
+            <text x="46" y="92" class="scr mono" fill="#9fb0c7" font-size="11">Paso 1:  F2 ← F2 − 2·F1</text>
+            <text x="46" y="112" class="scr mono" fill="#9fb0c7" font-size="11">⎡ 1  2 │ 5 ⎤</text>
+            <text x="46" y="130" class="scr mono" fill="#9fb0c7" font-size="11">⎣ 0 −3 │−4 ⎦</text>
+            <text x="46" y="156" class="scr mono" fill="#22d3ee" font-size="11">Paso 2:  F2 ← F2 ÷ −3</text>
+            <text x="46" y="180" class="scr mono" fill="#e8eef7" font-size="12">x = 7/3,  y = 4/3  ✓</text>
+            <rect x="46" y="196" width="120" height="16" rx="3" fill="#22d3ee22"/>
+            <text x="52" y="208" class="scr mono" fill="#22d3ee" font-size="10">SOLUCIÓN LISTA</text>
+            <!-- touchpad -->
+            <circle cx="170" cy="280" r="34" fill="#0e1a2e" stroke="#27395a" stroke-width="2"/>
+            <circle cx="170" cy="280" r="14" fill="#15233b" stroke="#2dd4ee44" stroke-width="1.5"/>
+            <!-- teclado -->
+            <g fill="#0e1a2e" stroke="#27395a" stroke-width="1.4">
+              <rect x="40"  y="336" width="56" height="28" rx="7"/><rect x="108" y="336" width="56" height="28" rx="7"/><rect x="176" y="336" width="56" height="28" rx="7"/><rect x="244" y="336" width="56" height="28" rx="7"/>
+              <rect x="40"  y="374" width="56" height="28" rx="7"/><rect x="108" y="374" width="56" height="28" rx="7"/><rect x="176" y="374" width="56" height="28" rx="7"/><rect x="244" y="374" width="56" height="28" rx="7"/>
+              <rect x="40"  y="412" width="56" height="28" rx="7"/><rect x="108" y="412" width="56" height="28" rx="7"/><rect x="176" y="412" width="56" height="28" rx="7"/><rect x="244" y="412" width="56" height="28" rx="7"/>
+              <rect x="40"  y="450" width="56" height="28" rx="7"/><rect x="108" y="450" width="56" height="28" rx="7"/><rect x="176" y="450" width="56" height="28" rx="7"/><rect x="244" y="450" width="56" height="28" rx="7"/>
+              <rect x="40"  y="488" width="124" height="28" rx="7"/><rect x="176" y="488" width="124" height="28" rx="7"/>
+            </g>
+            <g fill="#64748b" font-size="11" text-anchor="middle" class="mono">
+              <text x="68" y="354">menu</text><text x="136" y="354">esc</text><text x="204" y="354">tab</text><text x="272" y="354">doc</text>
+              <text x="68" y="392">7</text><text x="136" y="392">8</text><text x="204" y="392">9</text><text x="272" y="392">×</text>
+              <text x="68" y="430">4</text><text x="136" y="430">5</text><text x="204" y="430">6</text><text x="272" y="430">−</text>
+              <text x="68" y="468">1</text><text x="136" y="468">2</text><text x="204" y="468">3</text><text x="272" y="468">+</text>
+              <text x="102" y="506">0</text><text x="238" y="506">enter</text>
+            </g>
+          </svg>
+          <div class="float-card float-tr">
+            <span class="mono-tag accent">PASO A PASO</span>
+            <span class="float-sub">como en la prueba</span>
+          </div>
+          <div class="float-card float-bl">
+            <span class="pulse-bar"></span>
+            <span class="mono-tag">RESULTADO OK</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a class="scroll-hint" href="#catalogo" aria-label="Bajar al catálogo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" width="22" height="22"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg>
+    </a>
+  </section>
+
+  <!-- ============ CATÁLOGO ============ -->
+  <section id="catalogo" class="section">
+    <div class="section-inner">
+      <div class="section-head reveal">
+        <div>
+          <span class="mono-tag accent">01 // CATÁLOGO</span>
+          <h2>Un código para <span class="accent">cada ramo</span></h2>
+        </div>
+        <p class="section-side">Cada programa se entrega como archivo <code>.tns</code> listo para instalar. Elige tu ramo, mira el detalle y compra en un minuto.</p>
+      </div>
+      <div class="filters reveal" id="filters" role="tablist" aria-label="Filtrar por categoría"></div>
+      <div class="grid" id="productos-grid"></div>
+    </div>
+  </section>
+
+  <!-- ============ A MEDIDA ============ -->
+  <section id="a-medida" class="section slim">
+    <div class="section-inner">
+      <div class="banner reveal">
+        <div>
+          <span class="mono-tag accent">¿NO ESTÁ TU RAMO?</span>
+          <h3>Pide un código a medida</h3>
+          <p>Cuéntanos qué ramo y qué tipo de ejercicios necesitas resolver, y cotizamos un programa hecho específicamente para ti.</p>
+        </div>
+        <a class="btn btn-cta btn-lg" data-whatsapp="Hola! Quiero cotizar un código a medida para la TI-Nspire. El ramo es: " href="#" target="_blank" rel="noopener">Cotizar por WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CÓMO FUNCIONA ============ -->
+  <section id="como-funciona" class="section">
+    <div class="section-inner">
+      <div class="section-head reveal">
+        <div>
+          <span class="mono-tag accent">02 // INSTALACIÓN</span>
+          <h2>Listo en <span class="accent">3 pasos</span></h2>
+        </div>
+        <p class="section-side">No necesitas saber programar ni instalar nada raro: solo el cable USB de tu calculadora.</p>
+      </div>
+      <div class="how-grid">
+        <div class="how-steps">
+          <div class="card step reveal">
+            <span class="step-num">01</span>
+            <div>
+              <h3>Elige y paga</h3>
+              <p>Selecciona el programa en el catálogo y paga por transferencia o MercadoPago. También puedes escribirnos directo por WhatsApp.</p>
+              <span class="chip-line"><span class="dot"></span>Pago simple, sin cuentas ni registros</span>
+            </div>
+          </div>
+          <div class="card step reveal">
+            <span class="step-num">02</span>
+            <div>
+              <h3>Recibe tu archivo .tns</h3>
+              <p>Te enviamos el archivo por WhatsApp o correo el mismo día, junto a una guía de instalación con capturas.</p>
+              <span class="chip-line"><span class="dot"></span>Reenvío gratis si lo pierdes</span>
+            </div>
+          </div>
+          <div class="card step reveal">
+            <span class="step-num">03</span>
+            <div>
+              <h3>Transfiere e instala</h3>
+              <p>Conecta la calculadora al PC, arrastra el archivo con <strong>TI-Nspire Computer Link</strong> (gratis) y listo: el programa queda en "Mis Documentos".</p>
+              <span class="chip-line"><span class="dot"></span>Transferencia por USB, sin drivers extra</span>
+            </div>
+          </div>
+        </div>
+        <div class="how-side">
+          <div class="card compat reveal">
+            <h4>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="16" height="16"><rect x="6" y="2.5" width="12" height="19" rx="2"/><path d="M9 18.5h6" stroke-linecap="round"/></svg>
+              Modelos compatibles
+            </h4>
+            <div class="compat-row"><span>TI-Nspire CX CAS</span><span class="ok">✓</span></div>
+            <div class="compat-row"><span>TI-Nspire CX II CAS</span><span class="ok">✓</span></div>
+            <div class="compat-row"><span>TI-Nspire CX / CX II (sin CAS)</span><span class="warn">consultar</span></div>
+            <div class="compat-row"><span>TI-84 / otras marcas</span><span class="no">✗</span></div>
+            <p class="compat-note">¿Dudas con tu modelo? Mándanos una foto de tu calculadora por WhatsApp y te confirmamos al instante.</p>
+          </div>
+          <div class="card highlight reveal">
+            <span class="mono-tag accent">INSTALACIÓN RÁPIDA</span>
+            <p class="big-num">&lt; 5 min</p>
+            <p>desde que recibes el archivo hasta usarlo en tu calculadora</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section id="faq" class="section">
+    <div class="section-inner narrow">
+      <div class="section-head reveal">
+        <div>
+          <span class="mono-tag accent">03 // PREGUNTAS FRECUENTES</span>
+          <h2>Lo que siempre <span class="accent">nos preguntan</span></h2>
+        </div>
+      </div>
+      <div id="faq-list"></div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACTO ============ -->
+  <section id="contacto" class="section">
+    <div class="section-inner">
+      <div class="section-head reveal">
+        <div>
+          <span class="mono-tag accent">04 // CONTACTO</span>
+          <h2>Hablemos <span class="accent">directo</span></h2>
+        </div>
+        <p class="section-side">Sin bots ni formularios eternos: te responde la misma persona que programa los códigos.</p>
+      </div>
+      <div class="contact-grid reveal">
+        <a class="card contact-card" data-whatsapp="Hola! Tengo una consulta sobre los códigos para TI-Nspire" href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="26" height="26"><path d="M17.5 14.4c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.42.25-.7.25-1.3.18-1.42-.07-.12-.27-.2-.57-.35z"/><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.35A10 10 0 1 0 12 2zm0 18.2c-1.5 0-2.97-.4-4.25-1.15l-.3-.18-3.07.83.84-3-.2-.31A8.2 8.2 0 1 1 12 20.2z"/></svg>
+          <div><h3>WhatsApp</h3><p>Respuesta rápida — ideal para comprar y resolver dudas</p></div>
+          <span class="arrow">→</span>
+        </a>
+        <a class="card contact-card" id="link-instagram" href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" width="26" height="26"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.9" fill="currentColor" stroke="none"/></svg>
+          <div><h3>Instagram</h3><p>Demos en video, novedades y descuentos de temporada</p></div>
+          <span class="arrow">→</span>
+        </a>
+        <a class="card contact-card" id="link-email" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" width="26" height="26"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/></svg>
+          <div><h3>Correo</h3><p>Para cotizaciones formales o pedidos a medida</p></div>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="brand-name" data-config="marca">NspireLab</span>
+      <p>Códigos para TI-Nspire CX CAS hechos por un estudiante de Ingeniería Civil.</p>
+    </div>
+    <div class="footer-links">
+      <a href="#catalogo">Catálogo</a>
+      <a href="#como-funciona">Instalación</a>
+      <a href="#faq">Preguntas</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+  </div>
+  <div class="footer-legal">
+    <p>TI-Nspire™ es una marca de Texas Instruments. Este sitio no está afiliado a Texas Instruments.</p>
+    <p>© <span id="year"></span> <span data-config="marca">NspireLab</span> — Hecho con ☕ entre certámenes.</p>
+  </div>
+</footer>
+
+<!-- ============ MODAL DETALLE ============ -->
+<div class="modal-backdrop" id="modal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button class="modal-close" id="modal-close" aria-label="Cerrar">✕</button>
+    <div class="modal-body" id="modal-body"><!-- contenido dinámico --></div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   CONFIGURACIÓN DEL SITIO — EDITA ESTE ARCHIVO PRIMERO
+   Aquí va todo lo personal: nombre de la tienda, WhatsApp, etc.
+   ============================================================ */
+
+const CONFIG = {
+  // Nombre de la marca/tienda (aparece en el header, footer, etc.)
+  marca: "NspireLab",
+
+  // Tu número de WhatsApp en formato internacional SIN el "+"
+  // Ejemplo Chile: 569XXXXXXXX  →  "56912345678"
+  whatsapp: "56912345678",
+
+  // Tu usuario de Instagram (sin @). Déjalo vacío "" para ocultar la tarjeta.
+  instagram: "nspirelab",
+
+  // Tu correo de contacto
+  email: "hola@nspirelab.cl",
+
+  // Texto del badge del hero (la "pastilla" sobre el título)
+  heroBadge: "Catálogo en crecimiento — nuevos códigos cada semestre",
+
+  // ID de un video de YouTube para mostrar en el hero EN VEZ de la
+  // calculadora dibujada. Ejemplo: "UJuCrWxkw9I". Vacío = calculadora.
+  videoDestacado: "",
+
+  // Moneda mostrada junto al precio
+  moneda: "CLP",
+};
+
+/* Preguntas frecuentes — agrega, edita o elimina libremente */
+const FAQ = [
+  {
+    q: "¿Cómo pago y cómo recibo el programa?",
+    a: "Puedes pagar por transferencia bancaria o MercadoPago. Apenas se confirma el pago te enviamos el archivo .tns por WhatsApp o correo, junto con la guía de instalación. Normalmente demora menos de una hora.",
+  },
+  {
+    q: "¿Funciona en mi calculadora?",
+    a: "Los programas están hechos y probados en la TI-Nspire CX CAS y funcionan también en la CX II CAS. Si tienes un modelo sin CAS (CX o CX II normal), escríbenos antes de comprar: algunos programas funcionan igual y otros necesitan el motor CAS.",
+  },
+  {
+    q: "¿Necesito saber programar para usarlos?",
+    a: "Para nada. Los programas tienen menús simples: eliges el tipo de problema, ingresas los datos y te muestra el desarrollo paso a paso. Si sabes usar tu calculadora, sabes usar estos programas.",
+  },
+  {
+    q: "¿Qué pasa si se me borra el archivo o cambio de calculadora?",
+    a: "Te lo reenviamos gratis, las veces que sea necesario. Guarda nuestro contacto y listo.",
+  },
+  {
+    q: "¿Los programas se actualizan?",
+    a: "Sí. Cuando un programa mejora (más tipos de ejercicios, correcciones, interfaz), todos los que lo compraron reciben la nueva versión gratis.",
+  },
+  {
+    q: "¿Puedo pedir un programa que no está en el catálogo?",
+    a: "¡Sí! Esa es nuestra especialidad. Cuéntanos el ramo y mándanos fotos de guías o pruebas tipo, y cotizamos un programa a medida. Los pedidos a medida suelen estar listos en 1 a 2 semanas.",
+  },
+];
+
+</script>
+<script>
+/* ============================================================
+   CATÁLOGO DE PRODUCTOS — AGREGA TUS CÓDIGOS AQUÍ
+   Cada producto es un bloque { ... }. Copia uno, pégalo y edítalo.
+
+   Campos:
+   - id:               identificador único, sin espacios (ej: "calculo-2")
+   - nombre:           nombre comercial del programa
+   - categoria:        agrupa los filtros del catálogo (usa pocas, repítelas)
+   - estado:           "disponible" | "beta" | "proximamente"
+   - precio:           número, en pesos (sin puntos). 0 = "Gratis"
+   - precioAntes:      precio tachado para mostrar descuento, o null
+   - descripcionCorta: 1-2 líneas para la tarjeta del catálogo
+   - descripcionLarga: párrafo completo para la ventana de detalle
+   - caracteristicas:  lista de funciones (las 3 primeras salen en la tarjeta)
+   - ramos:            en qué ramos/asignaturas sirve (chips en el detalle)
+   - video:            ID de YouTube del demo (ej: "UJuCrWxkw9I"), o ""
+   - linkPago:         link de pago directo (MercadoPago, etc.). Si está
+                       vacío "", el botón Comprar abre WhatsApp con un
+                       mensaje listo para enviar.
+   - icono:            "estructura" | "matriz" | "integral" | "edo" |
+                       "fisica" | "material" | "suelo" | "pack"
+   - destacado:        true le pone la cinta "★ MEJOR VALOR"
+   ============================================================ */
+
+const PRODUCTOS = [
+  {
+    id: "calculo-total",
+    nombre: "Cálculo Total",
+    categoria: "Cálculo",
+    estado: "disponible",
+    precio: 9990,
+    precioAntes: null,
+    descripcionCorta: "Límites, derivadas e integrales resueltas paso a paso, con el desarrollo completo como lo pide el profesor.",
+    descripcionLarga: "El compañero perfecto para Cálculo I y II. Ingresas la función y el programa muestra el desarrollo completo: regla aplicada en cada paso, simplificaciones intermedias y resultado final. Incluye módulos de optimización, razones de cambio y análisis de funciones (máximos, mínimos, inflexión).",
+    caracteristicas: [
+      "Derivadas paso a paso (cadena, producto, cociente)",
+      "Integrales por sustitución y por partes con desarrollo",
+      "Límites con resolución de indeterminaciones",
+      "Optimización y razones de cambio guiadas",
+      "Análisis completo de funciones para gráficos",
+      "Menú simple en español",
+    ],
+    ramos: ["Cálculo I", "Cálculo II", "Matemáticas para Ingeniería"],
+    video: "",
+    linkPago: "",
+    icono: "integral",
+    destacado: false,
+  },
+  {
+    id: "algebra-master",
+    nombre: "Álgebra Lineal Master",
+    categoria: "Álgebra",
+    estado: "disponible",
+    precio: 9990,
+    precioAntes: null,
+    descripcionCorta: "Gauss paso a paso, inversas, determinantes, valores y vectores propios — con cada operación de fila a la vista.",
+    descripcionLarga: "Todo el álgebra lineal del semestre en un solo programa. La estrella es el escalonamiento de Gauss-Jordan mostrando cada operación de fila (F2 ← F2 − 2·F1) tal como hay que escribirlas en la prueba. Además: inversa por cofactores y por Gauss, determinantes con desarrollo, independencia lineal, y valores/vectores propios con su polinomio característico.",
+    caracteristicas: [
+      "Gauss-Jordan mostrando cada operación de fila",
+      "Sistemas de ecuaciones con clasificación de soluciones",
+      "Inversa y determinante con desarrollo",
+      "Valores y vectores propios + polinomio característico",
+      "Bases, dimensión e independencia lineal",
+      "Producto cruz, proyecciones y Gram-Schmidt",
+    ],
+    ramos: ["Álgebra Lineal", "Álgebra II"],
+    video: "",
+    linkPago: "",
+    icono: "matriz",
+    destacado: false,
+  },
+  {
+    id: "edo-solver",
+    nombre: "EDO Solver",
+    categoria: "Cálculo",
+    estado: "disponible",
+    precio: 11990,
+    precioAntes: null,
+    descripcionCorta: "Ecuaciones diferenciales ordinarias clasificadas y resueltas con el método correcto, paso a paso.",
+    descripcionLarga: "Identifica automáticamente el tipo de EDO (variables separables, lineal de primer orden, exacta, Bernoulli, homogénea, segundo orden a coeficientes constantes) y la resuelve mostrando el método completo: factor integrante, ecuación característica, solución homogénea + particular. Incluye problemas de aplicación: mezclas, enfriamiento de Newton y circuitos RL/RC.",
+    caracteristicas: [
+      "Clasificación automática del tipo de EDO",
+      "Primer orden: separables, lineales, exactas, Bernoulli",
+      "Segundo orden: coeficientes constantes y Cauchy-Euler",
+      "Coeficientes indeterminados y variación de parámetros",
+      "Aplicaciones: mezclas, enfriamiento, circuitos",
+      "Condiciones iniciales y solución particular",
+    ],
+    ramos: ["Ecuaciones Diferenciales", "Cálculo III"],
+    video: "",
+    linkPago: "",
+    icono: "edo",
+    destacado: false,
+  },
+  {
+    id: "estatica-2d",
+    nombre: "Estática 2D Pro",
+    categoria: "Estructuras",
+    estado: "disponible",
+    precio: 14990,
+    precioAntes: null,
+    descripcionCorta: "Reacciones de apoyo, armaduras y diagramas de esfuerzo interno (N, V, M) directo en la calculadora.",
+    descripcionLarga: "Resuelve los clásicos de Estática: equilibrio de partículas y cuerpos rígidos, reacciones en vigas con todo tipo de apoyos y cargas (puntuales, distribuidas uniformes y triangulares, momentos), armaduras por método de nodos y secciones, y diagramas de fuerza axial, corte y momento flector con los valores críticos marcados.",
+    caracteristicas: [
+      "Reacciones de apoyo con ecuaciones de equilibrio a la vista",
+      "Cargas puntuales, distribuidas y momentos aplicados",
+      "Armaduras por método de nodos y de secciones",
+      "Diagramas N / V / M con valores máximos",
+      "Centroides y momentos de inercia de áreas compuestas",
+      "Roce estático y poleas",
+    ],
+    ramos: ["Estática", "Mecánica I", "Análisis Estructural"],
+    video: "",
+    linkPago: "",
+    icono: "estructura",
+    destacado: false,
+  },
+  {
+    id: "fisica-mecanica",
+    nombre: "Física Mecánica Kit",
+    categoria: "Física",
+    estado: "beta",
+    precio: 8990,
+    precioAntes: null,
+    descripcionCorta: "Cinemática, dinámica, trabajo-energía y momentum con fórmulas seleccionadas automáticamente.",
+    descripcionLarga: "Le das los datos que tienes y el programa identifica qué fórmulas aplican, despeja la incógnita y muestra el reemplazo numérico completo. Cubre cinemática 1D/2D, proyectiles, leyes de Newton con planos inclinados y roce, trabajo y energía, y choques en una dimensión.",
+    caracteristicas: [
+      "Cinemática 1D y 2D con selección automática de fórmula",
+      "Lanzamiento de proyectiles completo",
+      "Newton: planos inclinados, roce, poleas",
+      "Trabajo, energía y potencia",
+      "Momentum y choques elásticos/inelásticos",
+    ],
+    ramos: ["Física I", "Mecánica"],
+    video: "",
+    linkPago: "",
+    icono: "fisica",
+    destacado: false,
+  },
+  {
+    id: "resistencia-materiales",
+    nombre: "Resistencia de Materiales",
+    categoria: "Estructuras",
+    estado: "beta",
+    precio: 12990,
+    precioAntes: null,
+    descripcionCorta: "Esfuerzos axiales, torsión, flexión, círculo de Mohr y deflexión de vigas paso a paso.",
+    descripcionLarga: "El ramo que más cuesta, resuelto con calma: esfuerzo y deformación axial (incluyendo barras compuestas y térmica), torsión en ejes, esfuerzos por flexión y corte transversal, transformación de esfuerzos con círculo de Mohr dibujado en pantalla, y deflexión de vigas por integración doble y superposición.",
+    caracteristicas: [
+      "Esfuerzo-deformación axial y barras compuestas",
+      "Torsión en ejes circulares con ángulo de giro",
+      "Flexión: esfuerzos normales y de corte",
+      "Círculo de Mohr dibujado con esfuerzos principales",
+      "Deflexión de vigas por doble integración",
+    ],
+    ramos: ["Resistencia de Materiales", "Mecánica de Sólidos"],
+    video: "",
+    linkPago: "",
+    icono: "material",
+    destacado: false,
+  },
+  {
+    id: "mecanica-suelos",
+    nombre: "Mecánica de Suelos",
+    categoria: "Estructuras",
+    estado: "proximamente",
+    precio: 12990,
+    precioAntes: null,
+    descripcionCorta: "Relaciones de fase, esfuerzos efectivos, consolidación y clasificación USCS. En desarrollo.",
+    descripcionLarga: "En desarrollo: relaciones peso-volumen con diagrama de fases, clasificación de suelos USCS y AASHTO, esfuerzos geostáticos y efectivos con napa freática, flujo de agua y consolidación. Avísanos si lo quieres y te escribimos apenas esté listo (los primeros en la lista tienen descuento de lanzamiento).",
+    caracteristicas: [
+      "Relaciones de fase (e, n, w, S, pesos específicos)",
+      "Clasificación USCS y AASHTO guiada",
+      "Esfuerzos totales, neutros y efectivos",
+      "Consolidación y asentamientos",
+    ],
+    ramos: ["Mecánica de Suelos", "Geotecnia"],
+    video: "",
+    linkPago: "",
+    icono: "suelo",
+    destacado: false,
+  },
+  {
+    id: "pack-civil",
+    nombre: "Pack Ingeniería Civil",
+    categoria: "Packs",
+    estado: "disponible",
+    precio: 39990,
+    precioAntes: 59940,
+    descripcionCorta: "Todos los códigos disponibles del catálogo + actualizaciones y códigos beta incluidos. El kit completo de la carrera.",
+    descripcionLarga: "Todos los programas disponibles del catálogo en una sola compra, con un 33% de descuento sobre el precio individual. Incluye también acceso anticipado a los programas en beta y a todos los que se publiquen mientras estés en la carrera. Una sola inversión para todos los ramos.",
+    caracteristicas: [
+      "Todos los códigos disponibles incluidos",
+      "Acceso anticipado a los programas beta",
+      "Códigos nuevos incluidos mientras estudias",
+      "Actualizaciones de por vida",
+      "Soporte prioritario por WhatsApp",
+    ],
+    ramos: ["Toda la carrera"],
+    video: "",
+    linkPago: "",
+    icono: "pack",
+    destacado: true,
+  },
+];
+
+</script>
+<script>
+/* ============================================================
+   app.js — lógica del sitio. No necesitas editar este archivo:
+   todo lo personalizable vive en config.js y productos.js
+   ============================================================ */
+
+(function () {
+  "use strict";
+
+  /* ---------- helpers ---------- */
+
+  const $ = (sel, ctx) => (ctx || document).querySelector(sel);
+  const $$ = (sel, ctx) => Array.from((ctx || document).querySelectorAll(sel));
+
+  const formatPrecio = (n) =>
+    n === 0 ? "Gratis" : "$" + n.toLocaleString("es-CL");
+
+  const waLink = (mensaje) =>
+    "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(mensaje);
+
+  const ESTADOS = {
+    disponible: "Disponible",
+    beta: "Beta",
+    proximamente: "Próximamente",
+  };
+
+  /* Iconos de producto (trazados estilo heroicons) */
+  const ICONOS = {
+    integral:
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="24" height="24"><path stroke-linecap="round" d="M14.5 3.5c-1.2-.9-3-.4-3.4 1.2L8.9 19.3c-.4 1.6-2.2 2.1-3.4 1.2"/><path stroke-linecap="round" d="M15 13.5 19.5 19M19.5 13.5 15 19"/></svg>',
+    matriz:
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="24" height="24"><path stroke-linecap="round" d="M7.5 3H5.25A1.25 1.25 0 0 0 4 4.25v15.5C4 20.44 4.56 21 5.25 21H7.5M16.5 3h2.25C19.44 3 20 3.56 20 4.25v15.5c0 .69-.56 1.25-1.25 1.25H16.5"/><path stroke-linecap="round" d="M8.5 8.5h.01M12 8.5h.01M15.5 8.5h.01M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 15.5h.01M12 15.5h.01M15.5 15.5h.01" stroke-width="2.2"/></svg>',
+    edo:
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="24" height="24"><path stroke-linecap="round" d="M3 17c3-9 6-9 9 0s6 9 9 0"/><path stroke-linecap="round" d="M3 7h4M5 5v4"/></svg>',
+    estructura:
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 18h18M5 18V8l7-4 7 4v10M12 4v14M5 12h14M5 8l14 10M19 8 5 18"/></svg>',
+    fisica:
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z"/></svg>',
+    material:
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="m21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"/></svg>',
+    suelo:
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3 2.25 8.25 12 13.5l9.75-5.25L12 3ZM2.25 12.75 12 18l9.75-5.25M2.25 17.25 12 22.5l9.75-5.25"/></svg>',
+    pack:
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="m21 7.5-2.25-1.31M21 7.5v2.25m0-2.25-2.25 1.31M3 7.5l2.25-1.31M3 7.5l2.25 1.31M3 7.5v2.25m9 3 2.25-1.31M12 12.75l-2.25-1.31M12 12.75V15m0 6.75 2.25-1.31M12 21.75V19.5m0 2.25-2.25-1.31m0-16.875L12 2.25l2.25 1.313M21 14.25v2.25l-2.25 1.313m-13.5 0L3 16.5v-2.25"/></svg>',
+  };
+
+  const iconoDe = (p) => ICONOS[p.icono] || ICONOS.pack;
+
+  /* Mensaje de compra prellenado para WhatsApp */
+  const msgCompra = (p) =>
+    "Hola! Quiero comprar *" + p.nombre + "* (" + formatPrecio(p.precio) +
+    " " + CONFIG.moneda + ") para mi TI-Nspire. ¿Cómo pago? 🙌";
+
+  const msgAviso = (p) =>
+    "Hola! Avísame cuando *" + p.nombre + "* esté disponible para la TI-Nspire 👀";
+
+  /* ---------- aplicar configuración ---------- */
+
+  function aplicarConfig() {
+    document.title = CONFIG.marca + " — Códigos para TI-Nspire CX CAS";
+    $$("[data-config='marca']").forEach((el) => (el.textContent = CONFIG.marca));
+    $("#hero-badge").textContent = CONFIG.heroBadge;
+    $("#year").textContent = new Date().getFullYear();
+
+    // links de WhatsApp con mensaje prellenado
+    $$("[data-whatsapp]").forEach((el) => {
+      el.href = waLink(el.dataset.whatsapp);
+    });
+
+    // instagram y correo
+    const ig = $("#link-instagram");
+    if (CONFIG.instagram) ig.href = "https://instagram.com/" + CONFIG.instagram;
+    else ig.style.display = "none";
+    $("#link-email").href = "mailto:" + CONFIG.email;
+
+    // video destacado en el hero (reemplaza el mockup de calculadora)
+    if (CONFIG.videoDestacado) {
+      $("#hero-visual").innerHTML =
+        '<div class="video-frame"><iframe src="https://www.youtube.com/embed/' +
+        CONFIG.videoDestacado +
+        '" title="Demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>';
+    }
+
+    // estadísticas del hero calculadas desde el catálogo
+    const visibles = PRODUCTOS.filter((p) => p.estado !== "proximamente");
+    $("#stat-programas").textContent = visibles.length;
+    const ramos = new Set();
+    PRODUCTOS.forEach((p) => p.ramos.forEach((r) => ramos.add(r)));
+    $("#stat-ramos").textContent = ramos.size + "+";
+  }
+
+  /* ---------- catálogo ---------- */
+
+  let filtroActivo = "Todos";
+
+  function renderFiltros() {
+    const cats = ["Todos", ...new Set(PRODUCTOS.map((p) => p.categoria))];
+    $("#filters").innerHTML = cats
+      .map(
+        (c) =>
+          '<button class="filter-chip' + (c === filtroActivo ? " active" : "") +
+          '" data-cat="' + c + '">' + c + "</button>"
+      )
+      .join("");
+    $$(".filter-chip").forEach((btn) =>
+      btn.addEventListener("click", () => {
+        filtroActivo = btn.dataset.cat;
+        renderFiltros();
+        renderProductos();
+      })
+    );
+  }
+
+  function cardProducto(p) {
+    const feats = p.caracteristicas.slice(0, 3)
+      .map((f) => "<li>" + f + "</li>").join("");
+    const masFeats = p.caracteristicas.length > 3
+      ? '<li class="more">y ' + (p.caracteristicas.length - 3) + " funciones más…</li>"
+      : "";
+
+    const precioAntes = p.precioAntes
+      ? '<span class="price-before">' + formatPrecio(p.precioAntes) + "</span>"
+      : "";
+
+    let acciones;
+    if (p.estado === "proximamente") {
+      acciones =
+        '<a class="btn btn-ghost full" target="_blank" rel="noopener" href="' +
+        waLink(msgAviso(p)) + '">🔔 Avísame cuando esté listo</a>';
+    } else {
+      const linkCompra = p.linkPago || waLink(msgCompra(p));
+      acciones =
+        '<button class="btn btn-ghost" data-detalle="' + p.id + '">Ver detalle</button>' +
+        '<a class="btn btn-buy" target="_blank" rel="noopener" href="' + linkCompra + '">Comprar</a>';
+    }
+
+    return (
+      '<article class="card product' + (p.destacado ? " destacado" : "") + '" data-id="' + p.id + '">' +
+      '<div class="product-top">' +
+      '<div class="product-icon">' + iconoDe(p) + "</div>" +
+      '<span class="estado ' + p.estado + '">' + ESTADOS[p.estado] + "</span>" +
+      "</div>" +
+      '<span class="mono-tag product-cat">' + p.categoria + "</span>" +
+      "<h3>" + p.nombre + "</h3>" +
+      '<p class="product-desc">' + p.descripcionCorta + "</p>" +
+      '<ul class="product-feats">' + feats + masFeats + "</ul>" +
+      '<div class="product-bottom">' +
+      '<div class="price-row"><span class="price">' + formatPrecio(p.precio) + "</span>" +
+      precioAntes +
+      '<span class="price-note">' + CONFIG.moneda + " · pago único</span></div>" +
+      '<div class="product-actions">' + acciones + "</div>" +
+      "</div></article>"
+    );
+  }
+
+  function renderProductos() {
+    const lista = PRODUCTOS.filter(
+      (p) => filtroActivo === "Todos" || p.categoria === filtroActivo
+    );
+    $("#productos-grid").innerHTML = lista.map(cardProducto).join("");
+    $$("[data-detalle]").forEach((btn) =>
+      btn.addEventListener("click", () => abrirModal(btn.dataset.detalle))
+    );
+  }
+
+  /* ---------- modal de detalle ---------- */
+
+  function abrirModal(id) {
+    const p = PRODUCTOS.find((x) => x.id === id);
+    if (!p) return;
+
+    const video = p.video
+      ? '<div class="modal-video"><div class="video-frame"><iframe src="https://www.youtube.com/embed/' +
+        p.video + '" title="Demo de ' + p.nombre +
+        '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div>'
+      : "";
+
+    const precioAntes = p.precioAntes
+      ? '<span class="price-before">' + formatPrecio(p.precioAntes) + "</span>"
+      : "";
+
+    const linkCompra = p.linkPago || waLink(msgCompra(p));
+
+    $("#modal-body").innerHTML =
+      '<div class="modal-head">' +
+      '<div class="product-icon">' + iconoDe(p) + "</div>" +
+      "<div><h2 id='modal-title'>" + p.nombre + "</h2>" +
+      '<div class="modal-tags"><span class="mono-tag accent">' + p.categoria +
+      '</span><span class="estado ' + p.estado + '">' + ESTADOS[p.estado] + "</span></div>" +
+      "</div></div>" +
+      '<p class="modal-desc">' + p.descripcionLarga + "</p>" +
+      video +
+      '<p class="modal-section-title">// Qué incluye</p>' +
+      '<ul class="modal-feats">' +
+      p.caracteristicas.map((f) => "<li>" + f + "</li>").join("") +
+      "</ul>" +
+      '<p class="modal-section-title">// Te sirve para</p>' +
+      '<div class="modal-ramos">' +
+      p.ramos.map((r) => '<span class="ramo-chip">' + r + "</span>").join("") +
+      "</div>" +
+      '<div class="modal-buy">' +
+      '<div><div class="price-row"><span class="price">' + formatPrecio(p.precio) + "</span>" +
+      precioAntes + "</div>" +
+      '<span class="price-note">' + CONFIG.moneda + " · pago único · entrega el mismo día</span></div>" +
+      '<a class="btn btn-buy btn-lg" target="_blank" rel="noopener" href="' + linkCompra + '">Comprar ahora</a>' +
+      "</div>";
+
+    $("#modal").hidden = false;
+    document.body.style.overflow = "hidden";
+  }
+
+  function cerrarModal() {
+    $("#modal").hidden = true;
+    $("#modal-body").innerHTML = "";
+    document.body.style.overflow = "";
+  }
+
+  /* ---------- FAQ ---------- */
+
+  function renderFaq() {
+    $("#faq-list").innerHTML = FAQ.map(
+      (item, i) =>
+        '<div class="faq-item reveal">' +
+        '<button class="faq-q" data-faq="' + i + '" aria-expanded="false">' +
+        "<span>" + item.q + '</span><span class="icon">+</span></button>' +
+        '<div class="faq-a"><div class="faq-a-inner">' + item.a + "</div></div></div>"
+    ).join("");
+
+    $$(".faq-q").forEach((btn) =>
+      btn.addEventListener("click", () => {
+        const item = btn.parentElement;
+        const abierto = item.classList.contains("open");
+        $$(".faq-item.open").forEach((el) => {
+          el.classList.remove("open");
+          $(".faq-a", el).style.maxHeight = "0";
+          $(".faq-q", el).setAttribute("aria-expanded", "false");
+        });
+        if (!abierto) {
+          item.classList.add("open");
+          const a = $(".faq-a", item);
+          a.style.maxHeight = a.scrollHeight + "px";
+          btn.setAttribute("aria-expanded", "true");
+        }
+      })
+    );
+  }
+
+  /* ---------- efectos ---------- */
+
+  function efectos() {
+    // sombra del header al hacer scroll
+    const header = $("#header");
+    window.addEventListener("scroll", () =>
+      header.classList.toggle("scrolled", window.scrollY > 30)
+    );
+
+    // animación de entrada
+    const obs = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add("visible");
+            obs.unobserve(e.target);
+          }
+        }),
+      { threshold: 0.12 }
+    );
+    $$(".reveal").forEach((el) => obs.observe(el));
+
+    // cerrar modal
+    $("#modal-close").addEventListener("click", cerrarModal);
+    $("#modal").addEventListener("click", (e) => {
+      if (e.target.id === "modal") cerrarModal();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !$("#modal").hidden) cerrarModal();
+    });
+  }
+
+  /* ---------- init ---------- */
+
+  aplicarConfig();
+  renderFiltros();
+  renderProductos();
+  renderFaq();
+  efectos();
+})();
+
+</script>
+</body>
+</html>
