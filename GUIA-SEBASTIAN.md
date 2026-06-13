@@ -156,5 +156,61 @@ el sitio empuja justo eso: que se junten varios del mismo ramo.
 
 ---
 
+## 10. Cobrar online en Chile — opciones, comisiones y lo legal 💳
+
+**Pasarelas (para automatizar el pago de estudiantes chilenos):**
+
+| Opción | Comisión aprox. | Medios | Notas |
+|---|---|---|---|
+| **Transferencia + WhatsApp** (ya activo) | 0% | Transferencia | Manual, pero cero costo. Ideal para partir. |
+| **Flow.cl** | ~0,99% + IVA en transferencia | Webpay (tarjetas) + transferencia | Comisión más baja, Webpay que todos usan en Chile. |
+| **MercadoPago** | desde ~2,89% + IVA | Tarjetas, saldo MP | Depósito instantáneo, súper conocido entre jóvenes, link sin programar. |
+| **Khipu** | ~1% | Solo transferencia bancaria | Barato pero sin tarjeta. |
+
+**Recomendación:** parte con **Flow** (comisión baja + Webpay) o **MercadoPago** (lo más
+simple). Creas un *link de pago* por cada plan y lo pegas en el campo `linkPago` de ese
+nivel en `productos.js`; el botón "Comprar" irá directo al pago. **Ojo con tu modelo:**
+como entregas con licencia por serial, necesitas el número de serie *antes* de entregar.
+Por eso para el plan Completo ($90k) conviene seguir cerrando por WhatsApp (pides serial,
+mandas link). El Verificador barato sí lo puedes automatizar más.
+
+**Lo legal (Chile):** vender de forma recurrente exige **iniciar actividades en el SII**
+(gratis, online, solo tu RUT y clave; tienes 2 meses desde que partes). Puedes ir como
+persona natural enmarcándolo como *servicio de desarrollo de software*, emites **boleta**
+(si pagan con tarjeta, el comprobante puede servir de boleta), y declaras con el
+**Formulario 29** mensual + la renta anual en abril. Las pasarelas de pago **ya exigen**
+inicio de actividades, y desde 2026 hay una Ley de Cumplimiento Tributario que aprieta la
+informalidad. *No soy contador:* parte informal con transferencias si quieres probar, pero
+apenas vendas en serio formaliza — el SII tiene un Portal Emprendedor gratis, y un contador
+para algo simple es barato.
+
+## 11. IA para administrar tu WhatsApp 🤖
+
+**Sí se puede usar Claude.** No hay app oficial "Claude para WhatsApp", pero se conecta:
+WhatsApp Business **Cloud API** (oficial de Meta) + la **API de Anthropic (Claude)** unidas
+por un conector no-code (**Make**, **Albato**, **Wassenger**, **Pipedream**) o una
+plataforma de atención (**Wati**, **Respond.io**).
+
+⚠️ **No automatices tu WhatsApp personal con apps no oficiales** — Meta puede banear el
+número. Usa siempre la **API oficial** (Cloud API o un proveedor).
+
+**Lo óptimo según tu etapa:**
+- **Ahora (pocas ventas, producto caro):** NO pongas bot todavía. Para algo de $90k, el
+  trato personal es lo que cierra la venta. Usa **WhatsApp Business** (gratis): mensaje de
+  bienvenida automático, **respuestas rápidas** guardadas (precios, compatibilidad, cómo
+  pagar, cómo instalar) y el catálogo. Cubre el 80% sin bot.
+- **Cuando crezca el volumen de consultas repetidas:** conecta **Claude** vía Cloud API.
+  Claude responde las FAQ (precios, si sirve para su calculadora, cómo se paga), filtra
+  quién está listo para comprar y te pasa a ti los pedidos a medida y las ventas grandes.
+- **Costo:** la Cloud API de Meta es gratis hasta cierto volumen; la API de Claude se paga
+  por uso (con un modelo rápido tipo Haiku, son centavos por conversación).
+
+Claude es muy buena opción (conversación natural en español, sigue bien el tono e
+instrucciones). La decisión "Claude vs otro" pesa menos que la arquitectura: API oficial +
+un buen prompt con tu catálogo, precios y reglas. *Esto te lo puede armar Ignacio con su
+Claude cuando lo quieras.*
+
+---
+
 ¿Dudas con cualquier paso? El sitio está hecho para que no necesites saber programar para
 mantenerlo. Lo que sí es tuyo y nadie reemplaza: los códigos. Enfócate ahí.
