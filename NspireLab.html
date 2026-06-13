@@ -755,6 +755,112 @@ footer { background: var(--bg-0); border-top: 1px solid var(--border); padding: 
 .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
 .reveal.visible { opacity: 1; transform: none; }
 
+/* ---------- niveles en la tarjeta ---------- */
+.niveles-mini { display: grid; gap: 8px; margin-bottom: 20px; }
+.nivel-mini {
+  background: var(--bg-0);
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  padding: 11px 14px;
+}
+.nivel-mini:last-child { border-color: rgba(34, 211, 238, 0.28); background: var(--cyan-soft); }
+.nivel-mini-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.nivel-name {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-1);
+}
+.nivel-mini:last-child .nivel-name { color: var(--cyan); }
+.nivel-price { font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; letter-spacing: -0.02em; }
+.nivel-price .price-before { font-size: 0.72rem; margin-right: 6px; }
+.nivel-tag { font-size: 0.74rem; color: var(--text-2); margin-top: 3px; }
+.product-actions .full, .product-actions .btn.full { grid-column: 1 / -1; width: 100%; }
+.product-actions { grid-template-columns: 1fr; }
+
+/* ---------- planes en el modal ---------- */
+.plan-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+.plan-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+}
+.plan-premium {
+  border-color: rgba(34, 211, 238, 0.4);
+  background: linear-gradient(165deg, rgba(34, 211, 238, 0.07), var(--card));
+  position: relative;
+}
+.plan-premium::after {
+  content: "RECOMENDADO";
+  position: absolute;
+  top: -9px; right: 16px;
+  background: var(--cyan);
+  color: var(--bg-0);
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+.plan-head { margin-bottom: 14px; }
+.plan-name {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--cyan);
+  display: block;
+}
+.plan-tag { font-size: 0.82rem; color: var(--text-2); margin-top: 5px; }
+.plan-price { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.plan-price .price { font-family: var(--font-display); font-size: 1.7rem; font-weight: 700; letter-spacing: -0.03em; }
+.plan-feats { list-style: none; display: grid; gap: 9px; margin-bottom: 20px; flex: 1; }
+.plan-feats li { font-size: 0.83rem; color: var(--text-2); display: flex; gap: 9px; align-items: baseline; }
+.plan-feats li::before { content: "✓"; color: var(--green); font-weight: 800; flex-shrink: 0; }
+
+.serie-note {
+  display: flex;
+  gap: 13px;
+  align-items: flex-start;
+  background: rgba(34, 211, 238, 0.06);
+  border: 1px solid rgba(34, 211, 238, 0.25);
+  border-radius: 13px;
+  padding: 15px 17px;
+  margin-bottom: 24px;
+  font-size: 0.85rem;
+  color: var(--text-2);
+}
+.serie-note strong { color: var(--text-1); }
+.serie-ico { font-size: 1.1rem; line-height: 1.2; }
+.modal-grupal {
+  font-size: 0.84rem;
+  color: var(--text-2);
+  background: var(--bg-2);
+  border: 1px dashed var(--border);
+  border-radius: 11px;
+  padding: 13px 16px;
+  margin-bottom: 24px;
+}
+
+/* ---------- banda grupal ---------- */
+.banner-grupal {
+  background: linear-gradient(135deg, rgba(251, 146, 60, 0.1), rgba(13, 23, 38, 0.6));
+  border-color: rgba(251, 146, 60, 0.35);
+  margin-bottom: 16px;
+}
+
 /* ---------- responsive ---------- */
 @media (max-width: 920px) {
   .hero-inner { grid-template-columns: 1fr; }
@@ -764,6 +870,9 @@ footer { background: var(--bg-0); border-top: 1px solid var(--border); padding: 
   .float-bl { left: -18%; }
   .how-grid { grid-template-columns: 1fr; }
   #header nav { display: none; }
+}
+@media (max-width: 640px) {
+  .plan-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 560px) {
   .float-card { display: none; }
@@ -812,7 +921,7 @@ footer { background: var(--bg-0); border-top: 1px solid var(--border); padding: 
           <span class="mono-tag" id="hero-badge">Catálogo en crecimiento — nuevos códigos cada semestre</span>
         </div>
         <h1 class="reveal">Tu <span class="accent glow">TI-Nspire CX CAS</span><br/>al nivel de la <span class="thin">ingeniería</span></h1>
-        <p class="hero-sub reveal">Programas que resuelven <strong>paso a paso</strong> los problemas de tus ramos — cálculo, álgebra lineal, estática y más — directamente en la calculadora, sin PC. Hechos por un estudiante de Ingeniería Civil que sabe exactamente lo que se pregunta en las pruebas.</p>
+        <p class="hero-sub reveal">Programas para los ramos pesados de la carrera — análisis estructural, hormigón, dinámica, geotecnia — que resuelven <strong>paso a paso</strong> directamente en la calculadora, sin PC. Hechos por un estudiante de Ingeniería Civil que sabe exactamente lo que se pregunta en las pruebas.</p>
         <div class="hero-stats reveal">
           <div class="stat"><p class="stat-num" id="stat-programas">—</p><p class="stat-label">Programas</p></div>
           <div class="stat-div"></div>
@@ -831,9 +940,9 @@ footer { background: var(--bg-0); border-top: 1px solid var(--border); padding: 
           </a>
         </div>
         <div class="trust-row reveal">
+          <span class="trust-chip">🔒 Licencia por número de serie</span>
           <span class="trust-chip">⚡ Entrega el mismo día</span>
           <span class="trust-chip">📲 Soporte directo por WhatsApp</span>
-          <span class="trust-chip">🔁 Reenvío gratis si pierdes el archivo</span>
         </div>
       </div>
 
@@ -852,15 +961,15 @@ footer { background: var(--bg-0); border-top: 1px solid var(--border); padding: 
             <rect x="10" y="8" width="320" height="544" rx="28" fill="url(#bodyGrad)" stroke="#27395a" stroke-width="2"/>
             <rect x="32" y="34" width="276" height="190" rx="10" fill="url(#screenGrad)" stroke="#2dd4ee55" stroke-width="1.5"/>
             <!-- pantalla -->
-            <text x="46" y="60" class="scr mono" fill="#67e8f9" font-size="12">▸ ALGEBRA LINEAL v1.2</text>
+            <text x="46" y="60" class="scr mono" fill="#67e8f9" font-size="12">▸ ANÁLISIS MATRICIAL</text>
             <line x1="46" y1="70" x2="294" y2="70" stroke="#1c2b42" stroke-width="1"/>
-            <text x="46" y="92" class="scr mono" fill="#9fb0c7" font-size="11">Paso 1:  F2 ← F2 − 2·F1</text>
-            <text x="46" y="112" class="scr mono" fill="#9fb0c7" font-size="11">⎡ 1  2 │ 5 ⎤</text>
-            <text x="46" y="130" class="scr mono" fill="#9fb0c7" font-size="11">⎣ 0 −3 │−4 ⎦</text>
-            <text x="46" y="156" class="scr mono" fill="#22d3ee" font-size="11">Paso 2:  F2 ← F2 ÷ −3</text>
-            <text x="46" y="180" class="scr mono" fill="#e8eef7" font-size="12">x = 7/3,  y = 4/3  ✓</text>
-            <rect x="46" y="196" width="120" height="16" rx="3" fill="#22d3ee22"/>
-            <text x="52" y="208" class="scr mono" fill="#22d3ee" font-size="10">SOLUCIÓN LISTA</text>
+            <text x="46" y="92" class="scr mono" fill="#9fb0c7" font-size="11">Paso 1: matriz [K] global</text>
+            <text x="46" y="112" class="scr mono" fill="#9fb0c7" font-size="11">⎡ EA/L   0   ⎤</text>
+            <text x="46" y="130" class="scr mono" fill="#9fb0c7" font-size="11">⎣  0   12EI/L³⎦</text>
+            <text x="46" y="156" class="scr mono" fill="#22d3ee" font-size="11">Paso 2: [K]{u} = {F}</text>
+            <text x="46" y="180" class="scr mono" fill="#e8eef7" font-size="12">u₃ = 2.41 mm  ✓</text>
+            <rect x="46" y="196" width="128" height="16" rx="3" fill="#22d3ee22"/>
+            <text x="52" y="208" class="scr mono" fill="#22d3ee" font-size="10">ESTRUCTURA RESUELTA</text>
             <!-- touchpad -->
             <circle cx="170" cy="280" r="34" fill="#0e1a2e" stroke="#27395a" stroke-width="2"/>
             <circle cx="170" cy="280" r="14" fill="#15233b" stroke="#2dd4ee44" stroke-width="1.5"/>
@@ -911,16 +1020,24 @@ footer { background: var(--bg-0); border-top: 1px solid var(--border); padding: 
     </div>
   </section>
 
-  <!-- ============ A MEDIDA ============ -->
+  <!-- ============ GRUPAL + A MEDIDA ============ -->
   <section id="a-medida" class="section slim">
     <div class="section-inner">
+      <div class="banner banner-grupal reveal" id="grupal-bloque">
+        <div>
+          <span class="mono-tag accent">PRECIO GRUPAL</span>
+          <h3>Compren entre varios y ahorren</h3>
+          <p id="grupal-texto">¿Van varios del mismo ramo? Desde 3 personas que compran el mismo programa, hay precio especial para cada una.</p>
+        </div>
+        <a class="btn btn-cta btn-lg" id="grupal-cta" href="#" target="_blank" rel="noopener">Consultar precio grupal</a>
+      </div>
       <div class="banner reveal">
         <div>
           <span class="mono-tag accent">¿NO ESTÁ TU RAMO?</span>
           <h3>Pide un código a medida</h3>
-          <p>Cuéntanos qué ramo y qué tipo de ejercicios necesitas resolver, y cotizamos un programa hecho específicamente para ti.</p>
+          <p>Cuéntanos qué ramo y qué tipo de ejercicios necesitas resolver, y cotizamos un programa hecho específicamente para ti, con sus dos planes.</p>
         </div>
-        <a class="btn btn-cta btn-lg" data-whatsapp="Hola! Quiero cotizar un código a medida para la TI-Nspire. El ramo es: " href="#" target="_blank" rel="noopener">Cotizar por WhatsApp</a>
+        <a class="btn btn-outline btn-lg" data-whatsapp="Hola! Quiero cotizar un código a medida para la TI-Nspire. El ramo es: " href="#" target="_blank" rel="noopener">Cotizar por WhatsApp</a>
       </div>
     </div>
   </section>
@@ -1076,7 +1193,7 @@ const CONFIG = {
   email: "hola@nspirelab.cl",
 
   // Texto del badge del hero (la "pastilla" sobre el título)
-  heroBadge: "Catálogo en crecimiento — nuevos códigos cada semestre",
+  heroBadge: "Programas avanzados — licencia por número de serie",
 
   // ID de un video de YouTube para mostrar en el hero EN VEZ de la
   // calculadora dibujada. Ejemplo: "UJuCrWxkw9I". Vacío = calculadora.
@@ -1084,241 +1201,343 @@ const CONFIG = {
 
   // Moneda mostrada junto al precio
   moneda: "CLP",
+
+  // Cada programa se entrega activado SOLO para el número de serie de la
+  // calculadora del comprador. Si es true, los mensajes de compra piden el
+  // serie y se muestra el aviso en el sitio.
+  licenciaPorSerie: true,
+
+  // Descuento por grupo (varias personas que compran el MISMO programa).
+  // Pon activo: false para ocultarlo.
+  descuentoGrupal: {
+    activo: true,
+    minPersonas: 3,
+    texto: "¿Van varios del mismo ramo? Desde 3 personas que compran el mismo programa, hay precio especial para cada una.",
+  },
 };
 
 /* Preguntas frecuentes — agrega, edita o elimina libremente */
 const FAQ = [
   {
+    q: "¿Qué diferencia hay entre el plan Verificador y el Completo?",
+    a: "El Verificador resuelve el problema y te muestra el resultado final y los gráficos, ideal para comprobar lo que ya hiciste a mano o en un software. El Completo te muestra TODO el procedimiento paso a paso, con las fórmulas aplicadas y notas teóricas — sirve para aprender y resolver de cero, como si tuvieras la pauta del profesor adentro de la calculadora.",
+  },
+  {
+    q: "¿Cómo funciona la licencia por número de serie?",
+    a: "Cada programa se activa exclusivamente para la calculadora del comprador. Al comprar nos das el número de serie de tu TI-Nspire CX CAS (lo encuentras en Ajustes → Estado), y el programa solo funcionará en ese equipo. Es la garantía de que tu copia es única y de que estás comprando original.",
+  },
+  {
     q: "¿Cómo pago y cómo recibo el programa?",
-    a: "Puedes pagar por transferencia bancaria o MercadoPago. Apenas se confirma el pago te enviamos el archivo .tns por WhatsApp o correo, junto con la guía de instalación. Normalmente demora menos de una hora.",
+    a: "Puedes pagar por transferencia o MercadoPago. Apenas se confirma el pago y con tu número de serie, te enviamos el archivo .tns ya activado por WhatsApp o correo, junto con la guía de instalación. Normalmente el mismo día.",
   },
   {
     q: "¿Funciona en mi calculadora?",
-    a: "Los programas están hechos y probados en la TI-Nspire CX CAS y funcionan también en la CX II CAS. Si tienes un modelo sin CAS (CX o CX II normal), escríbenos antes de comprar: algunos programas funcionan igual y otros necesitan el motor CAS.",
+    a: "Los programas están hechos y probados en la TI-Nspire CX CAS y la CX II CAS. Si tienes un modelo sin CAS, escríbenos antes de comprar: la mayoría de estos programas usan el motor CAS para el cálculo simbólico.",
   },
   {
-    q: "¿Necesito saber programar para usarlos?",
-    a: "Para nada. Los programas tienen menús simples: eliges el tipo de problema, ingresas los datos y te muestra el desarrollo paso a paso. Si sabes usar tu calculadora, sabes usar estos programas.",
+    q: "¿Hay descuento si compramos varios?",
+    a: "Sí. Si son 3 o más personas comprando el mismo programa (típico entre compañeros de un ramo), hay precio especial para cada una. Escríbenos por WhatsApp con cuántos son y qué programa quieren.",
   },
   {
-    q: "¿Qué pasa si se me borra el archivo o cambio de calculadora?",
-    a: "Te lo reenviamos gratis, las veces que sea necesario. Guarda nuestro contacto y listo.",
-  },
-  {
-    q: "¿Los programas se actualizan?",
-    a: "Sí. Cuando un programa mejora (más tipos de ejercicios, correcciones, interfaz), todos los que lo compraron reciben la nueva versión gratis.",
+    q: "¿Puedo partir con el Verificador y subir al Completo después?",
+    a: "Claro. Si compraste el Verificador y luego quieres el Completo del mismo programa, pagas solo la diferencia. Escríbenos y lo gestionamos.",
   },
   {
     q: "¿Puedo pedir un programa que no está en el catálogo?",
-    a: "¡Sí! Esa es nuestra especialidad. Cuéntanos el ramo y mándanos fotos de guías o pruebas tipo, y cotizamos un programa a medida. Los pedidos a medida suelen estar listos en 1 a 2 semanas.",
+    a: "Sí, es parte de lo que hacemos. Cuéntanos el ramo y mándanos fotos de guías o pruebas tipo, y cotizamos un programa a medida con sus dos planes.",
   },
 ];
 
 </script>
 <script>
 /* ============================================================
-   CATÁLOGO DE PRODUCTOS — AGREGA TUS CÓDIGOS AQUÍ
-   Cada producto es un bloque { ... }. Copia uno, pégalo y edítalo.
+   CATÁLOGO DE PROGRAMAS — AGREGA TUS CÓDIGOS AQUÍ
+   Cada programa tiene DOS NIVELES (planes):
+     - "verificador": solo comprueba y visualiza el resultado.  (más barato)
+     - "completo":    procedimiento paso a paso + notas teóricas. (premium)
 
-   Campos:
-   - id:               identificador único, sin espacios (ej: "calculo-2")
+   Copia un bloque { ... }, pégalo y edítalo. Campos:
+   - id:               identificador único, sin espacios (ej: "matricial")
    - nombre:           nombre comercial del programa
    - categoria:        agrupa los filtros del catálogo (usa pocas, repítelas)
    - estado:           "disponible" | "beta" | "proximamente"
-   - precio:           número, en pesos (sin puntos). 0 = "Gratis"
-   - precioAntes:      precio tachado para mostrar descuento, o null
-   - descripcionCorta: 1-2 líneas para la tarjeta del catálogo
-   - descripcionLarga: párrafo completo para la ventana de detalle
-   - caracteristicas:  lista de funciones (las 3 primeras salen en la tarjeta)
+   - descripcionCorta: 1-2 líneas para la tarjeta
+   - descripcionLarga: párrafo para la ventana de detalle
    - ramos:            en qué ramos/asignaturas sirve (chips en el detalle)
    - video:            ID de YouTube del demo (ej: "UJuCrWxkw9I"), o ""
-   - linkPago:         link de pago directo (MercadoPago, etc.). Si está
-                       vacío "", el botón Comprar abre WhatsApp con un
-                       mensaje listo para enviar.
-   - icono:            "estructura" | "matriz" | "integral" | "edo" |
-                       "fisica" | "material" | "suelo" | "pack"
-   - destacado:        true le pone la cinta "★ MEJOR VALOR"
+   - icono:            "matricial" | "hormigon" | "dinamica" | "geotecnia" |
+                       "hidraulica" | "numerico" | "estructura" | "material"
+   - destacado:        true le pone la cinta "★ DESTACADO"
+   - niveles:          los dos planes. Cada uno con:
+        tipo:           "verificador" o "completo"
+        nombre:         etiqueta del plan
+        tagline:        frase corta de qué hace ese plan
+        precio:         número en pesos (sin puntos)
+        precioAntes:    precio tachado (oferta) o null
+        caracteristicas: lista de lo que incluye ese plan
+        linkPago:       link de pago directo, o "" para ir a WhatsApp
    ============================================================ */
 
 const PRODUCTOS = [
   {
-    id: "calculo-total",
-    nombre: "Cálculo Total",
-    categoria: "Cálculo",
-    estado: "disponible",
-    precio: 9990,
-    precioAntes: null,
-    descripcionCorta: "Límites, derivadas e integrales resueltas paso a paso, con el desarrollo completo como lo pide el profesor.",
-    descripcionLarga: "El compañero perfecto para Cálculo I y II. Ingresas la función y el programa muestra el desarrollo completo: regla aplicada en cada paso, simplificaciones intermedias y resultado final. Incluye módulos de optimización, razones de cambio y análisis de funciones (máximos, mínimos, inflexión).",
-    caracteristicas: [
-      "Derivadas paso a paso (cadena, producto, cociente)",
-      "Integrales por sustitución y por partes con desarrollo",
-      "Límites con resolución de indeterminaciones",
-      "Optimización y razones de cambio guiadas",
-      "Análisis completo de funciones para gráficos",
-      "Menú simple en español",
-    ],
-    ramos: ["Cálculo I", "Cálculo II", "Matemáticas para Ingeniería"],
-    video: "",
-    linkPago: "",
-    icono: "integral",
-    destacado: false,
-  },
-  {
-    id: "algebra-master",
-    nombre: "Álgebra Lineal Master",
-    categoria: "Álgebra",
-    estado: "disponible",
-    precio: 9990,
-    precioAntes: null,
-    descripcionCorta: "Gauss paso a paso, inversas, determinantes, valores y vectores propios — con cada operación de fila a la vista.",
-    descripcionLarga: "Todo el álgebra lineal del semestre en un solo programa. La estrella es el escalonamiento de Gauss-Jordan mostrando cada operación de fila (F2 ← F2 − 2·F1) tal como hay que escribirlas en la prueba. Además: inversa por cofactores y por Gauss, determinantes con desarrollo, independencia lineal, y valores/vectores propios con su polinomio característico.",
-    caracteristicas: [
-      "Gauss-Jordan mostrando cada operación de fila",
-      "Sistemas de ecuaciones con clasificación de soluciones",
-      "Inversa y determinante con desarrollo",
-      "Valores y vectores propios + polinomio característico",
-      "Bases, dimensión e independencia lineal",
-      "Producto cruz, proyecciones y Gram-Schmidt",
-    ],
-    ramos: ["Álgebra Lineal", "Álgebra II"],
-    video: "",
-    linkPago: "",
-    icono: "matriz",
-    destacado: false,
-  },
-  {
-    id: "edo-solver",
-    nombre: "EDO Solver",
-    categoria: "Cálculo",
-    estado: "disponible",
-    precio: 11990,
-    precioAntes: null,
-    descripcionCorta: "Ecuaciones diferenciales ordinarias clasificadas y resueltas con el método correcto, paso a paso.",
-    descripcionLarga: "Identifica automáticamente el tipo de EDO (variables separables, lineal de primer orden, exacta, Bernoulli, homogénea, segundo orden a coeficientes constantes) y la resuelve mostrando el método completo: factor integrante, ecuación característica, solución homogénea + particular. Incluye problemas de aplicación: mezclas, enfriamiento de Newton y circuitos RL/RC.",
-    caracteristicas: [
-      "Clasificación automática del tipo de EDO",
-      "Primer orden: separables, lineales, exactas, Bernoulli",
-      "Segundo orden: coeficientes constantes y Cauchy-Euler",
-      "Coeficientes indeterminados y variación de parámetros",
-      "Aplicaciones: mezclas, enfriamiento, circuitos",
-      "Condiciones iniciales y solución particular",
-    ],
-    ramos: ["Ecuaciones Diferenciales", "Cálculo III"],
-    video: "",
-    linkPago: "",
-    icono: "edo",
-    destacado: false,
-  },
-  {
-    id: "estatica-2d",
-    nombre: "Estática 2D Pro",
+    id: "matricial",
+    nombre: "Análisis Matricial de Estructuras",
     categoria: "Estructuras",
     estado: "disponible",
-    precio: 14990,
-    precioAntes: null,
-    descripcionCorta: "Reacciones de apoyo, armaduras y diagramas de esfuerzo interno (N, V, M) directo en la calculadora.",
-    descripcionLarga: "Resuelve los clásicos de Estática: equilibrio de partículas y cuerpos rígidos, reacciones en vigas con todo tipo de apoyos y cargas (puntuales, distribuidas uniformes y triangulares, momentos), armaduras por método de nodos y secciones, y diagramas de fuerza axial, corte y momento flector con los valores críticos marcados.",
-    caracteristicas: [
-      "Reacciones de apoyo con ecuaciones de equilibrio a la vista",
-      "Cargas puntuales, distribuidas y momentos aplicados",
-      "Armaduras por método de nodos y de secciones",
-      "Diagramas N / V / M con valores máximos",
-      "Centroides y momentos de inercia de áreas compuestas",
-      "Roce estático y poleas",
-    ],
-    ramos: ["Estática", "Mecánica I", "Análisis Estructural"],
+    descripcionCorta: "Método de rigidez para armaduras y pórticos 2D: ensambla la matriz global, resuelve desplazamientos y obtiene esfuerzos en cada barra.",
+    descripcionLarga: "El motor que está detrás de todo software estructural, ahora en tu calculadora. Defines nodos, barras, apoyos y cargas; el programa arma la matriz de rigidez de cada elemento, ensambla la matriz global, aplica condiciones de borde y resuelve el sistema para entregar desplazamientos nodales, reacciones y esfuerzos internos (N, V, M) de cada barra. Ideal para Análisis Estructural y como verificación de tareas hechas en SAP2000 o ETABS.",
+    ramos: ["Análisis Estructural", "Análisis Matricial", "Estructuras II"],
     video: "",
-    linkPago: "",
-    icono: "estructura",
-    destacado: false,
-  },
-  {
-    id: "fisica-mecanica",
-    nombre: "Física Mecánica Kit",
-    categoria: "Física",
-    estado: "beta",
-    precio: 8990,
-    precioAntes: null,
-    descripcionCorta: "Cinemática, dinámica, trabajo-energía y momentum con fórmulas seleccionadas automáticamente.",
-    descripcionLarga: "Le das los datos que tienes y el programa identifica qué fórmulas aplican, despeja la incógnita y muestra el reemplazo numérico completo. Cubre cinemática 1D/2D, proyectiles, leyes de Newton con planos inclinados y roce, trabajo y energía, y choques en una dimensión.",
-    caracteristicas: [
-      "Cinemática 1D y 2D con selección automática de fórmula",
-      "Lanzamiento de proyectiles completo",
-      "Newton: planos inclinados, roce, poleas",
-      "Trabajo, energía y potencia",
-      "Momentum y choques elásticos/inelásticos",
-    ],
-    ramos: ["Física I", "Mecánica"],
-    video: "",
-    linkPago: "",
-    icono: "fisica",
-    destacado: false,
-  },
-  {
-    id: "resistencia-materiales",
-    nombre: "Resistencia de Materiales",
-    categoria: "Estructuras",
-    estado: "beta",
-    precio: 12990,
-    precioAntes: null,
-    descripcionCorta: "Esfuerzos axiales, torsión, flexión, círculo de Mohr y deflexión de vigas paso a paso.",
-    descripcionLarga: "El ramo que más cuesta, resuelto con calma: esfuerzo y deformación axial (incluyendo barras compuestas y térmica), torsión en ejes, esfuerzos por flexión y corte transversal, transformación de esfuerzos con círculo de Mohr dibujado en pantalla, y deflexión de vigas por integración doble y superposición.",
-    caracteristicas: [
-      "Esfuerzo-deformación axial y barras compuestas",
-      "Torsión en ejes circulares con ángulo de giro",
-      "Flexión: esfuerzos normales y de corte",
-      "Círculo de Mohr dibujado con esfuerzos principales",
-      "Deflexión de vigas por doble integración",
-    ],
-    ramos: ["Resistencia de Materiales", "Mecánica de Sólidos"],
-    video: "",
-    linkPago: "",
-    icono: "material",
-    destacado: false,
-  },
-  {
-    id: "mecanica-suelos",
-    nombre: "Mecánica de Suelos",
-    categoria: "Estructuras",
-    estado: "proximamente",
-    precio: 12990,
-    precioAntes: null,
-    descripcionCorta: "Relaciones de fase, esfuerzos efectivos, consolidación y clasificación USCS. En desarrollo.",
-    descripcionLarga: "En desarrollo: relaciones peso-volumen con diagrama de fases, clasificación de suelos USCS y AASHTO, esfuerzos geostáticos y efectivos con napa freática, flujo de agua y consolidación. Avísanos si lo quieres y te escribimos apenas esté listo (los primeros en la lista tienen descuento de lanzamiento).",
-    caracteristicas: [
-      "Relaciones de fase (e, n, w, S, pesos específicos)",
-      "Clasificación USCS y AASHTO guiada",
-      "Esfuerzos totales, neutros y efectivos",
-      "Consolidación y asentamientos",
-    ],
-    ramos: ["Mecánica de Suelos", "Geotecnia"],
-    video: "",
-    linkPago: "",
-    icono: "suelo",
-    destacado: false,
-  },
-  {
-    id: "pack-civil",
-    nombre: "Pack Ingeniería Civil",
-    categoria: "Packs",
-    estado: "disponible",
-    precio: 39990,
-    precioAntes: 59940,
-    descripcionCorta: "Todos los códigos disponibles del catálogo + actualizaciones y códigos beta incluidos. El kit completo de la carrera.",
-    descripcionLarga: "Todos los programas disponibles del catálogo en una sola compra, con un 33% de descuento sobre el precio individual. Incluye también acceso anticipado a los programas en beta y a todos los que se publiquen mientras estés en la carrera. Una sola inversión para todos los ramos.",
-    caracteristicas: [
-      "Todos los códigos disponibles incluidos",
-      "Acceso anticipado a los programas beta",
-      "Códigos nuevos incluidos mientras estudias",
-      "Actualizaciones de por vida",
-      "Soporte prioritario por WhatsApp",
-    ],
-    ramos: ["Toda la carrera"],
-    video: "",
-    linkPago: "",
-    icono: "pack",
+    icono: "matricial",
     destacado: true,
+    niveles: [
+      {
+        tipo: "verificador",
+        nombre: "Verificador",
+        tagline: "Comprueba resultados y visualiza la estructura",
+        precio: 18000,
+        precioAntes: null,
+        caracteristicas: [
+          "Ingresas la estructura y entrega desplazamientos y reacciones finales",
+          "Dibuja la estructura deformada a escala",
+          "Esfuerzos N/V/M finales por barra",
+          "Perfecto para chequear lo que resolviste a mano o en software",
+        ],
+        linkPago: "",
+      },
+      {
+        tipo: "completo",
+        nombre: "Completo",
+        tagline: "Todo el procedimiento paso a paso + teoría",
+        precio: 90000,
+        precioAntes: null,
+        caracteristicas: [
+          "Matriz de rigidez de cada elemento mostrada y explicada",
+          "Ensamblaje de la matriz global paso a paso",
+          "Aplicación de condiciones de borde detallada",
+          "Resolución del sistema con desarrollo completo",
+          "Notas teóricas: convenciones, grados de libertad, hipótesis",
+          "Diagramas N/V/M acotados con valores críticos",
+        ],
+        linkPago: "",
+      },
+    ],
+  },
+  {
+    id: "hormigon-armado",
+    nombre: "Hormigón Armado",
+    categoria: "Estructuras",
+    estado: "disponible",
+    descripcionCorta: "Diseño y verificación de vigas y columnas a flexión, corte y flexo-compresión según código.",
+    descripcionLarga: "Diseño de elementos de hormigón armado para el ramo más temido: vigas a flexión simple y doble armadura, verificación a corte y diseño de estribos, columnas a flexo-compresión con diagrama de interacción, y control de cuantías mínimas y máximas. Trabaja con los parámetros de la norma (f'c, fy, factores de reducción) que puedes ajustar.",
+    ramos: ["Hormigón Armado", "Diseño Estructural"],
+    video: "",
+    icono: "hormigon",
+    destacado: false,
+    niveles: [
+      {
+        tipo: "verificador",
+        nombre: "Verificador",
+        tagline: "Comprueba tu diseño y arma el diagrama",
+        precio: 20000,
+        precioAntes: null,
+        caracteristicas: [
+          "Ingresas geometría y armadura y entrega si cumple o no",
+          "Momento y corte resistente final",
+          "Diagrama de interacción de la columna dibujado",
+          "Para validar diseños hechos a mano",
+        ],
+        linkPago: "",
+      },
+      {
+        tipo: "completo",
+        nombre: "Completo",
+        tagline: "Diseño guiado paso a paso + notas de norma",
+        precio: 95000,
+        precioAntes: null,
+        caracteristicas: [
+          "Cálculo del bloque de compresiones paso a paso",
+          "Diseño de armadura a flexión con verificación de cuantías",
+          "Diseño de estribos a corte con separaciones",
+          "Construcción del diagrama de interacción punto a punto",
+          "Notas teóricas y referencia a artículos de la norma",
+          "Casos de doble armadura y secciones T",
+        ],
+        linkPago: "",
+      },
+    ],
+  },
+  {
+    id: "dinamica",
+    nombre: "Dinámica de Estructuras",
+    categoria: "Estructuras",
+    estado: "beta",
+    descripcionCorta: "Sistemas de uno y varios grados de libertad: frecuencias naturales, modos de vibrar y respuesta sísmica.",
+    descripcionLarga: "Para cursos de Dinámica e Ingeniería Sísmica. Resuelve sistemas de 1 GDL (vibración libre y forzada, amortiguamiento) y de múltiples GDL: matrices de masa y rigidez, problema de valores propios para frecuencias y modos, y análisis modal espectral con un espectro de diseño. Una herramienta que normalmente exige un PC, en la calculadora.",
+    ramos: ["Dinámica de Estructuras", "Ingeniería Sísmica"],
+    video: "",
+    icono: "dinamica",
+    destacado: false,
+    niveles: [
+      {
+        tipo: "verificador",
+        nombre: "Verificador",
+        tagline: "Frecuencias, modos y respuesta — resultado directo",
+        precio: 20000,
+        precioAntes: null,
+        caracteristicas: [
+          "Entrega frecuencias y períodos naturales",
+          "Dibuja las formas modales",
+          "Respuesta máxima por análisis modal espectral",
+          "Para verificar resultados de cursos o software",
+        ],
+        linkPago: "",
+      },
+      {
+        tipo: "completo",
+        nombre: "Completo",
+        tagline: "Desarrollo completo + teoría de dinámica",
+        precio: 100000,
+        precioAntes: null,
+        caracteristicas: [
+          "Armado de matrices de masa y rigidez explicado",
+          "Problema de valores propios paso a paso",
+          "Normalización de modos y matriz modal",
+          "Combinación modal (SRSS / CQC) detallada",
+          "Notas teóricas: amortiguamiento, participación modal",
+          "Casos de 1 GDL: libre, forzada y resonancia",
+        ],
+        linkPago: "",
+      },
+    ],
+  },
+  {
+    id: "geotecnia",
+    nombre: "Geotecnia Aplicada",
+    categoria: "Geotecnia",
+    estado: "disponible",
+    descripcionCorta: "Empujes de tierra, capacidad de soporte de fundaciones, asentamientos y consolidación.",
+    descripcionLarga: "Los cálculos clásicos de Mecánica de Suelos II y Fundaciones: empujes activo y pasivo (Rankine y Coulomb) sobre muros, capacidad de soporte por Terzaghi y Meyerhof, asentamientos elásticos e inmediatos, y consolidación primaria con tiempo. Con manejo de napa freática y estratos.",
+    ramos: ["Mecánica de Suelos", "Fundaciones", "Geotecnia"],
+    video: "",
+    icono: "geotecnia",
+    destacado: false,
+    niveles: [
+      {
+        tipo: "verificador",
+        nombre: "Verificador",
+        tagline: "Resultados de empuje, capacidad y asentamiento",
+        precio: 18000,
+        precioAntes: null,
+        caracteristicas: [
+          "Empuje total y punto de aplicación",
+          "Capacidad de soporte admisible",
+          "Asentamiento total y tiempo de consolidación",
+          "Diagrama de presiones dibujado",
+        ],
+        linkPago: "",
+      },
+      {
+        tipo: "completo",
+        nombre: "Completo",
+        tagline: "Procedimiento completo + fundamentos teóricos",
+        precio: 85000,
+        precioAntes: null,
+        caracteristicas: [
+          "Coeficientes de empuje calculados paso a paso",
+          "Capacidad por Terzaghi y Meyerhof con factores",
+          "Asentamiento por estratos detallado",
+          "Curva de consolidación y grado de avance",
+          "Notas teóricas: tensiones efectivas, napa, hipótesis",
+        ],
+        linkPago: "",
+      },
+    ],
+  },
+  {
+    id: "hidraulica",
+    nombre: "Hidráulica de Tuberías y Canales",
+    categoria: "Hidráulica",
+    estado: "proximamente",
+    descripcionCorta: "Redes de tuberías por Hardy-Cross, pérdidas de carga y flujo en canales abiertos. En desarrollo.",
+    descripcionLarga: "En desarrollo: pérdidas de carga por fricción (Darcy-Weisbach y Hazen-Williams), balance de redes de tuberías por el método de Hardy-Cross, y flujo en canales abiertos (energía específica, resalto hidráulico, flujo gradualmente variado). Avísanos si lo quieres y te escribimos apenas esté listo, con precio de lanzamiento para los primeros.",
+    ramos: ["Hidráulica", "Mecánica de Fluidos II"],
+    video: "",
+    icono: "hidraulica",
+    destacado: false,
+    niveles: [
+      {
+        tipo: "verificador",
+        nombre: "Verificador",
+        tagline: "Caudales, pérdidas y tirantes finales",
+        precio: 18000,
+        precioAntes: null,
+        caracteristicas: [
+          "Pérdida de carga total de la conducción",
+          "Caudales balanceados de la red",
+          "Tirante crítico y normal en canales",
+          "Para chequear tus cálculos",
+        ],
+        linkPago: "",
+      },
+      {
+        tipo: "completo",
+        nombre: "Completo",
+        tagline: "Iteraciones y desarrollo completo + teoría",
+        precio: 90000,
+        precioAntes: null,
+        caracteristicas: [
+          "Iteraciones de Hardy-Cross mostradas una a una",
+          "Cálculo del factor de fricción paso a paso",
+          "Energía específica y resalto hidráulico desarrollados",
+          "Notas teóricas: regímenes de flujo, número de Froude",
+        ],
+        linkPago: "",
+      },
+    ],
+  },
+  {
+    id: "metodos-numericos",
+    nombre: "Métodos Numéricos",
+    categoria: "Numérico",
+    estado: "beta",
+    descripcionCorta: "Sistemas no lineales, interpolación, integración numérica y EDO por Runge-Kutta.",
+    descripcionLarga: "El cajón de herramientas para Cálculo Numérico: raíces de ecuaciones (bisección, Newton-Raphson, punto fijo), sistemas lineales (Gauss, LU, Gauss-Seidel), interpolación y ajuste, integración numérica (trapecio, Simpson) y resolución de EDO por Euler y Runge-Kutta. Cada método mostrando su tabla de iteraciones.",
+    ramos: ["Cálculo Numérico", "Métodos Numéricos"],
+    video: "",
+    icono: "numerico",
+    destacado: false,
+    niveles: [
+      {
+        tipo: "verificador",
+        nombre: "Verificador",
+        tagline: "Resultado y convergencia, directo",
+        precio: 15000,
+        precioAntes: null,
+        caracteristicas: [
+          "Entrega la raíz / solución / integral final",
+          "Indica iteraciones y error alcanzado",
+          "Grafica la función y la solución",
+          "Para validar tus métodos rápido",
+        ],
+        linkPago: "",
+      },
+      {
+        tipo: "completo",
+        nombre: "Completo",
+        tagline: "Tabla de iteraciones completa + teoría",
+        precio: 80000,
+        precioAntes: null,
+        caracteristicas: [
+          "Tabla de iteraciones de cada método",
+          "Fórmula de recurrencia aplicada paso a paso",
+          "Análisis de error y criterio de convergencia",
+          "Notas teóricas de cada método y cuándo usarlo",
+          "Comparación entre métodos para el mismo problema",
+        ],
+        linkPago: "",
+      },
+    ],
   },
 ];
 
@@ -1349,32 +1568,39 @@ const PRODUCTOS = [
     proximamente: "Próximamente",
   };
 
+  const precioDesde = (p) => Math.min.apply(null, p.niveles.map((n) => n.precio));
+
   /* Iconos de producto (trazados estilo heroicons) */
   const ICONOS = {
-    integral:
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="24" height="24"><path stroke-linecap="round" d="M14.5 3.5c-1.2-.9-3-.4-3.4 1.2L8.9 19.3c-.4 1.6-2.2 2.1-3.4 1.2"/><path stroke-linecap="round" d="M15 13.5 19.5 19M19.5 13.5 15 19"/></svg>',
-    matriz:
+    matricial:
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="24" height="24"><path stroke-linecap="round" d="M7.5 3H5.25A1.25 1.25 0 0 0 4 4.25v15.5C4 20.44 4.56 21 5.25 21H7.5M16.5 3h2.25C19.44 3 20 3.56 20 4.25v15.5c0 .69-.56 1.25-1.25 1.25H16.5"/><path stroke-linecap="round" d="M8.5 8.5h.01M12 8.5h.01M15.5 8.5h.01M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 15.5h.01M12 15.5h.01M15.5 15.5h.01" stroke-width="2.2"/></svg>',
-    edo:
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="24" height="24"><path stroke-linecap="round" d="M3 17c3-9 6-9 9 0s6 9 9 0"/><path stroke-linecap="round" d="M3 7h4M5 5v4"/></svg>',
+    hormigon:
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 21h18M6 21V7l6-4 6 4v14M9 21v-5h6v5M9.5 9.5h.01M14.5 9.5h.01M12 12.5h.01"/></svg>',
+    dinamica:
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="M2 12c2-7 4-7 6 0s4 7 6 0 4-7 6 0"/></svg>',
+    geotecnia:
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8h18M3 13h18M3 18h18M3 4.5h18"/><path stroke-linecap="round" d="M7 6.2v.01M14 6.2v.01M10 10.5v.01M17 10.5v.01M6 15.5v.01M13 15.5v.01"/></svg>',
+    hidraulica:
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2.7s6 6.6 6 10.8a6 6 0 0 1-12 0C6 9.3 12 2.7 12 2.7Z"/></svg>',
+    numerico:
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="24" height="24"><path stroke-linecap="round" d="M14.5 3.5c-1.2-.9-3-.4-3.4 1.2L8.9 19.3c-.4 1.6-2.2 2.1-3.4 1.2"/><path stroke-linecap="round" d="M15 13.5 19.5 19M19.5 13.5 15 19"/></svg>',
     estructura:
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 18h18M5 18V8l7-4 7 4v10M12 4v14M5 12h14M5 8l14 10M19 8 5 18"/></svg>',
-    fisica:
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z"/></svg>',
     material:
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="m21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"/></svg>',
-    suelo:
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3 2.25 8.25 12 13.5l9.75-5.25L12 3ZM2.25 12.75 12 18l9.75-5.25M2.25 17.25 12 22.5l9.75-5.25"/></svg>',
-    pack:
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="m21 7.5-2.25-1.31M21 7.5v2.25m0-2.25-2.25 1.31M3 7.5l2.25-1.31M3 7.5l2.25 1.31M3 7.5v2.25m9 3 2.25-1.31M12 12.75l-2.25-1.31M12 12.75V15m0 6.75 2.25-1.31M12 21.75V19.5m0 2.25-2.25-1.31m0-16.875L12 2.25l2.25 1.313M21 14.25v2.25l-2.25 1.313m-13.5 0L3 16.5v-2.25"/></svg>',
   };
 
-  const iconoDe = (p) => ICONOS[p.icono] || ICONOS.pack;
+  const iconoDe = (p) => ICONOS[p.icono] || ICONOS.estructura;
 
   /* Mensaje de compra prellenado para WhatsApp */
-  const msgCompra = (p) =>
-    "Hola! Quiero comprar *" + p.nombre + "* (" + formatPrecio(p.precio) +
-    " " + CONFIG.moneda + ") para mi TI-Nspire. ¿Cómo pago? 🙌";
+  const msgCompra = (p, nivel) => {
+    let m =
+      "Hola! Quiero comprar *" + p.nombre + "* — plan *" + nivel.nombre +
+      "* (" + formatPrecio(nivel.precio) + " " + CONFIG.moneda + ").";
+    if (CONFIG.licenciaPorSerie)
+      m += " El número de serie de mi TI-Nspire CX CAS es: ____";
+    return m + " 🙌";
+  };
 
   const msgAviso = (p) =>
     "Hola! Avísame cuando *" + p.nombre + "* esté disponible para la TI-Nspire 👀";
@@ -1412,6 +1638,18 @@ const PRODUCTOS = [
     const ramos = new Set();
     PRODUCTOS.forEach((p) => p.ramos.forEach((r) => ramos.add(r)));
     $("#stat-ramos").textContent = ramos.size + "+";
+
+    // bloque de descuento grupal
+    const dg = CONFIG.descuentoGrupal;
+    const bloque = $("#grupal-bloque");
+    if (dg && dg.activo) {
+      $("#grupal-texto").textContent = dg.texto;
+      $("#grupal-cta").href = waLink(
+        "Hola! Somos un grupo del mismo ramo y queremos el mismo programa. ¿Cómo es el precio grupal?"
+      );
+    } else if (bloque) {
+      bloque.style.display = "none";
+    }
   }
 
   /* ---------- catálogo ---------- */
@@ -1436,27 +1674,27 @@ const PRODUCTOS = [
     );
   }
 
+  function nivelMini(n) {
+    const precioAntes = n.precioAntes
+      ? '<span class="price-before">' + formatPrecio(n.precioAntes) + "</span>"
+      : "";
+    return (
+      '<div class="nivel-mini">' +
+      '<div class="nivel-mini-head"><span class="nivel-name">' + n.nombre + "</span>" +
+      '<span class="nivel-price">' + precioAntes + formatPrecio(n.precio) + "</span></div>" +
+      '<p class="nivel-tag">' + n.tagline + "</p></div>"
+    );
+  }
+
   function cardProducto(p) {
-    const feats = p.caracteristicas.slice(0, 3)
-      .map((f) => "<li>" + f + "</li>").join("");
-    const masFeats = p.caracteristicas.length > 3
-      ? '<li class="more">y ' + (p.caracteristicas.length - 3) + " funciones más…</li>"
-      : "";
-
-    const precioAntes = p.precioAntes
-      ? '<span class="price-before">' + formatPrecio(p.precioAntes) + "</span>"
-      : "";
-
     let acciones;
     if (p.estado === "proximamente") {
       acciones =
         '<a class="btn btn-ghost full" target="_blank" rel="noopener" href="' +
         waLink(msgAviso(p)) + '">🔔 Avísame cuando esté listo</a>';
     } else {
-      const linkCompra = p.linkPago || waLink(msgCompra(p));
       acciones =
-        '<button class="btn btn-ghost" data-detalle="' + p.id + '">Ver detalle</button>' +
-        '<a class="btn btn-buy" target="_blank" rel="noopener" href="' + linkCompra + '">Comprar</a>';
+        '<button class="btn btn-buy full" data-detalle="' + p.id + '">Ver planes y comprar</button>';
     }
 
     return (
@@ -1468,11 +1706,8 @@ const PRODUCTOS = [
       '<span class="mono-tag product-cat">' + p.categoria + "</span>" +
       "<h3>" + p.nombre + "</h3>" +
       '<p class="product-desc">' + p.descripcionCorta + "</p>" +
-      '<ul class="product-feats">' + feats + masFeats + "</ul>" +
+      '<div class="niveles-mini">' + p.niveles.map(nivelMini).join("") + "</div>" +
       '<div class="product-bottom">' +
-      '<div class="price-row"><span class="price">' + formatPrecio(p.precio) + "</span>" +
-      precioAntes +
-      '<span class="price-note">' + CONFIG.moneda + " · pago único</span></div>" +
       '<div class="product-actions">' + acciones + "</div>" +
       "</div></article>"
     );
@@ -1490,6 +1725,27 @@ const PRODUCTOS = [
 
   /* ---------- modal de detalle ---------- */
 
+  function planCard(p, n) {
+    const precioAntes = n.precioAntes
+      ? '<span class="price-before">' + formatPrecio(n.precioAntes) + "</span>"
+      : "";
+    const linkCompra = n.linkPago || waLink(msgCompra(p, n));
+    const feats = n.caracteristicas
+      .map((f) => "<li>" + f + "</li>")
+      .join("");
+    return (
+      '<div class="plan-card' + (n.tipo === "completo" ? " plan-premium" : "") + '">' +
+      '<div class="plan-head"><span class="plan-name">' + n.nombre + "</span>" +
+      '<span class="plan-tag">' + n.tagline + "</span></div>" +
+      '<div class="plan-price">' + precioAntes +
+      '<span class="price">' + formatPrecio(n.precio) + "</span>" +
+      '<span class="price-note">' + CONFIG.moneda + " · pago único</span></div>" +
+      '<ul class="plan-feats">' + feats + "</ul>" +
+      '<a class="btn btn-buy full" target="_blank" rel="noopener" href="' + linkCompra + '">Comprar ' + n.nombre + "</a>" +
+      "</div>"
+    );
+  }
+
   function abrirModal(id) {
     const p = PRODUCTOS.find((x) => x.id === id);
     if (!p) return;
@@ -1500,11 +1756,14 @@ const PRODUCTOS = [
         '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div>'
       : "";
 
-    const precioAntes = p.precioAntes
-      ? '<span class="price-before">' + formatPrecio(p.precioAntes) + "</span>"
+    const aviso = CONFIG.licenciaPorSerie
+      ? '<div class="serie-note"><span class="serie-ico">🔒</span><div><strong>Licencia por número de serie.</strong> El programa se activa solo para tu calculadora. Al comprar nos das el número de serie de tu TI-Nspire CX CAS (Ajustes → Estado).</div></div>'
       : "";
 
-    const linkCompra = p.linkPago || waLink(msgCompra(p));
+    const dg = CONFIG.descuentoGrupal;
+    const grupal = dg && dg.activo
+      ? '<p class="modal-grupal">👥 ' + dg.texto + "</p>"
+      : "";
 
     $("#modal-body").innerHTML =
       '<div class="modal-head">' +
@@ -1515,19 +1774,13 @@ const PRODUCTOS = [
       "</div></div>" +
       '<p class="modal-desc">' + p.descripcionLarga + "</p>" +
       video +
-      '<p class="modal-section-title">// Qué incluye</p>' +
-      '<ul class="modal-feats">' +
-      p.caracteristicas.map((f) => "<li>" + f + "</li>").join("") +
-      "</ul>" +
+      aviso +
+      '<p class="modal-section-title">// Elige tu plan</p>' +
+      '<div class="plan-grid">' + p.niveles.map((n) => planCard(p, n)).join("") + "</div>" +
+      grupal +
       '<p class="modal-section-title">// Te sirve para</p>' +
       '<div class="modal-ramos">' +
       p.ramos.map((r) => '<span class="ramo-chip">' + r + "</span>").join("") +
-      "</div>" +
-      '<div class="modal-buy">' +
-      '<div><div class="price-row"><span class="price">' + formatPrecio(p.precio) + "</span>" +
-      precioAntes + "</div>" +
-      '<span class="price-note">' + CONFIG.moneda + " · pago único · entrega el mismo día</span></div>" +
-      '<a class="btn btn-buy btn-lg" target="_blank" rel="noopener" href="' + linkCompra + '">Comprar ahora</a>' +
       "</div>";
 
     $("#modal").hidden = false;

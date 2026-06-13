@@ -50,7 +50,7 @@
           <span class="mono-tag" id="hero-badge">Catálogo en crecimiento — nuevos códigos cada semestre</span>
         </div>
         <h1 class="reveal">Tu <span class="accent glow">TI-Nspire CX CAS</span><br/>al nivel de la <span class="thin">ingeniería</span></h1>
-        <p class="hero-sub reveal">Programas que resuelven <strong>paso a paso</strong> los problemas de tus ramos — cálculo, álgebra lineal, estática y más — directamente en la calculadora, sin PC. Hechos por un estudiante de Ingeniería Civil que sabe exactamente lo que se pregunta en las pruebas.</p>
+        <p class="hero-sub reveal">Programas para los ramos pesados de la carrera — análisis estructural, hormigón, dinámica, geotecnia — que resuelven <strong>paso a paso</strong> directamente en la calculadora, sin PC. Hechos por un estudiante de Ingeniería Civil que sabe exactamente lo que se pregunta en las pruebas.</p>
         <div class="hero-stats reveal">
           <div class="stat"><p class="stat-num" id="stat-programas">—</p><p class="stat-label">Programas</p></div>
           <div class="stat-div"></div>
@@ -69,9 +69,9 @@
           </a>
         </div>
         <div class="trust-row reveal">
+          <span class="trust-chip">🔒 Licencia por número de serie</span>
           <span class="trust-chip">⚡ Entrega el mismo día</span>
           <span class="trust-chip">📲 Soporte directo por WhatsApp</span>
-          <span class="trust-chip">🔁 Reenvío gratis si pierdes el archivo</span>
         </div>
       </div>
 
@@ -90,15 +90,15 @@
             <rect x="10" y="8" width="320" height="544" rx="28" fill="url(#bodyGrad)" stroke="#27395a" stroke-width="2"/>
             <rect x="32" y="34" width="276" height="190" rx="10" fill="url(#screenGrad)" stroke="#2dd4ee55" stroke-width="1.5"/>
             <!-- pantalla -->
-            <text x="46" y="60" class="scr mono" fill="#67e8f9" font-size="12">▸ ALGEBRA LINEAL v1.2</text>
+            <text x="46" y="60" class="scr mono" fill="#67e8f9" font-size="12">▸ ANÁLISIS MATRICIAL</text>
             <line x1="46" y1="70" x2="294" y2="70" stroke="#1c2b42" stroke-width="1"/>
-            <text x="46" y="92" class="scr mono" fill="#9fb0c7" font-size="11">Paso 1:  F2 ← F2 − 2·F1</text>
-            <text x="46" y="112" class="scr mono" fill="#9fb0c7" font-size="11">⎡ 1  2 │ 5 ⎤</text>
-            <text x="46" y="130" class="scr mono" fill="#9fb0c7" font-size="11">⎣ 0 −3 │−4 ⎦</text>
-            <text x="46" y="156" class="scr mono" fill="#22d3ee" font-size="11">Paso 2:  F2 ← F2 ÷ −3</text>
-            <text x="46" y="180" class="scr mono" fill="#e8eef7" font-size="12">x = 7/3,  y = 4/3  ✓</text>
-            <rect x="46" y="196" width="120" height="16" rx="3" fill="#22d3ee22"/>
-            <text x="52" y="208" class="scr mono" fill="#22d3ee" font-size="10">SOLUCIÓN LISTA</text>
+            <text x="46" y="92" class="scr mono" fill="#9fb0c7" font-size="11">Paso 1: matriz [K] global</text>
+            <text x="46" y="112" class="scr mono" fill="#9fb0c7" font-size="11">⎡ EA/L   0   ⎤</text>
+            <text x="46" y="130" class="scr mono" fill="#9fb0c7" font-size="11">⎣  0   12EI/L³⎦</text>
+            <text x="46" y="156" class="scr mono" fill="#22d3ee" font-size="11">Paso 2: [K]{u} = {F}</text>
+            <text x="46" y="180" class="scr mono" fill="#e8eef7" font-size="12">u₃ = 2.41 mm  ✓</text>
+            <rect x="46" y="196" width="128" height="16" rx="3" fill="#22d3ee22"/>
+            <text x="52" y="208" class="scr mono" fill="#22d3ee" font-size="10">ESTRUCTURA RESUELTA</text>
             <!-- touchpad -->
             <circle cx="170" cy="280" r="34" fill="#0e1a2e" stroke="#27395a" stroke-width="2"/>
             <circle cx="170" cy="280" r="14" fill="#15233b" stroke="#2dd4ee44" stroke-width="1.5"/>
@@ -149,16 +149,24 @@
     </div>
   </section>
 
-  <!-- ============ A MEDIDA ============ -->
+  <!-- ============ GRUPAL + A MEDIDA ============ -->
   <section id="a-medida" class="section slim">
     <div class="section-inner">
+      <div class="banner banner-grupal reveal" id="grupal-bloque">
+        <div>
+          <span class="mono-tag accent">PRECIO GRUPAL</span>
+          <h3>Compren entre varios y ahorren</h3>
+          <p id="grupal-texto">¿Van varios del mismo ramo? Desde 3 personas que compran el mismo programa, hay precio especial para cada una.</p>
+        </div>
+        <a class="btn btn-cta btn-lg" id="grupal-cta" href="#" target="_blank" rel="noopener">Consultar precio grupal</a>
+      </div>
       <div class="banner reveal">
         <div>
           <span class="mono-tag accent">¿NO ESTÁ TU RAMO?</span>
           <h3>Pide un código a medida</h3>
-          <p>Cuéntanos qué ramo y qué tipo de ejercicios necesitas resolver, y cotizamos un programa hecho específicamente para ti.</p>
+          <p>Cuéntanos qué ramo y qué tipo de ejercicios necesitas resolver, y cotizamos un programa hecho específicamente para ti, con sus dos planes.</p>
         </div>
-        <a class="btn btn-cta btn-lg" data-whatsapp="Hola! Quiero cotizar un código a medida para la TI-Nspire. El ramo es: " href="#" target="_blank" rel="noopener">Cotizar por WhatsApp</a>
+        <a class="btn btn-outline btn-lg" data-whatsapp="Hola! Quiero cotizar un código a medida para la TI-Nspire. El ramo es: " href="#" target="_blank" rel="noopener">Cotizar por WhatsApp</a>
       </div>
     </div>
   </section>

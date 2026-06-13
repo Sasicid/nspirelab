@@ -23,32 +23,39 @@
     proximamente: "Próximamente",
   };
 
+  const precioDesde = (p) => Math.min.apply(null, p.niveles.map((n) => n.precio));
+
   /* Iconos de producto (trazados estilo heroicons) */
   const ICONOS = {
-    integral:
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="24" height="24"><path stroke-linecap="round" d="M14.5 3.5c-1.2-.9-3-.4-3.4 1.2L8.9 19.3c-.4 1.6-2.2 2.1-3.4 1.2"/><path stroke-linecap="round" d="M15 13.5 19.5 19M19.5 13.5 15 19"/></svg>',
-    matriz:
+    matricial:
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="24" height="24"><path stroke-linecap="round" d="M7.5 3H5.25A1.25 1.25 0 0 0 4 4.25v15.5C4 20.44 4.56 21 5.25 21H7.5M16.5 3h2.25C19.44 3 20 3.56 20 4.25v15.5c0 .69-.56 1.25-1.25 1.25H16.5"/><path stroke-linecap="round" d="M8.5 8.5h.01M12 8.5h.01M15.5 8.5h.01M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 15.5h.01M12 15.5h.01M15.5 15.5h.01" stroke-width="2.2"/></svg>',
-    edo:
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="24" height="24"><path stroke-linecap="round" d="M3 17c3-9 6-9 9 0s6 9 9 0"/><path stroke-linecap="round" d="M3 7h4M5 5v4"/></svg>',
+    hormigon:
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 21h18M6 21V7l6-4 6 4v14M9 21v-5h6v5M9.5 9.5h.01M14.5 9.5h.01M12 12.5h.01"/></svg>',
+    dinamica:
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="M2 12c2-7 4-7 6 0s4 7 6 0 4-7 6 0"/></svg>',
+    geotecnia:
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8h18M3 13h18M3 18h18M3 4.5h18"/><path stroke-linecap="round" d="M7 6.2v.01M14 6.2v.01M10 10.5v.01M17 10.5v.01M6 15.5v.01M13 15.5v.01"/></svg>',
+    hidraulica:
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2.7s6 6.6 6 10.8a6 6 0 0 1-12 0C6 9.3 12 2.7 12 2.7Z"/></svg>',
+    numerico:
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="24" height="24"><path stroke-linecap="round" d="M14.5 3.5c-1.2-.9-3-.4-3.4 1.2L8.9 19.3c-.4 1.6-2.2 2.1-3.4 1.2"/><path stroke-linecap="round" d="M15 13.5 19.5 19M19.5 13.5 15 19"/></svg>',
     estructura:
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 18h18M5 18V8l7-4 7 4v10M12 4v14M5 12h14M5 8l14 10M19 8 5 18"/></svg>',
-    fisica:
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z"/></svg>',
     material:
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="m21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"/></svg>',
-    suelo:
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3 2.25 8.25 12 13.5l9.75-5.25L12 3ZM2.25 12.75 12 18l9.75-5.25M2.25 17.25 12 22.5l9.75-5.25"/></svg>',
-    pack:
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="m21 7.5-2.25-1.31M21 7.5v2.25m0-2.25-2.25 1.31M3 7.5l2.25-1.31M3 7.5l2.25 1.31M3 7.5v2.25m9 3 2.25-1.31M12 12.75l-2.25-1.31M12 12.75V15m0 6.75 2.25-1.31M12 21.75V19.5m0 2.25-2.25-1.31m0-16.875L12 2.25l2.25 1.313M21 14.25v2.25l-2.25 1.313m-13.5 0L3 16.5v-2.25"/></svg>',
   };
 
-  const iconoDe = (p) => ICONOS[p.icono] || ICONOS.pack;
+  const iconoDe = (p) => ICONOS[p.icono] || ICONOS.estructura;
 
   /* Mensaje de compra prellenado para WhatsApp */
-  const msgCompra = (p) =>
-    "Hola! Quiero comprar *" + p.nombre + "* (" + formatPrecio(p.precio) +
-    " " + CONFIG.moneda + ") para mi TI-Nspire. ¿Cómo pago? 🙌";
+  const msgCompra = (p, nivel) => {
+    let m =
+      "Hola! Quiero comprar *" + p.nombre + "* — plan *" + nivel.nombre +
+      "* (" + formatPrecio(nivel.precio) + " " + CONFIG.moneda + ").";
+    if (CONFIG.licenciaPorSerie)
+      m += " El número de serie de mi TI-Nspire CX CAS es: ____";
+    return m + " 🙌";
+  };
 
   const msgAviso = (p) =>
     "Hola! Avísame cuando *" + p.nombre + "* esté disponible para la TI-Nspire 👀";
@@ -86,6 +93,18 @@
     const ramos = new Set();
     PRODUCTOS.forEach((p) => p.ramos.forEach((r) => ramos.add(r)));
     $("#stat-ramos").textContent = ramos.size + "+";
+
+    // bloque de descuento grupal
+    const dg = CONFIG.descuentoGrupal;
+    const bloque = $("#grupal-bloque");
+    if (dg && dg.activo) {
+      $("#grupal-texto").textContent = dg.texto;
+      $("#grupal-cta").href = waLink(
+        "Hola! Somos un grupo del mismo ramo y queremos el mismo programa. ¿Cómo es el precio grupal?"
+      );
+    } else if (bloque) {
+      bloque.style.display = "none";
+    }
   }
 
   /* ---------- catálogo ---------- */
@@ -110,27 +129,27 @@
     );
   }
 
+  function nivelMini(n) {
+    const precioAntes = n.precioAntes
+      ? '<span class="price-before">' + formatPrecio(n.precioAntes) + "</span>"
+      : "";
+    return (
+      '<div class="nivel-mini">' +
+      '<div class="nivel-mini-head"><span class="nivel-name">' + n.nombre + "</span>" +
+      '<span class="nivel-price">' + precioAntes + formatPrecio(n.precio) + "</span></div>" +
+      '<p class="nivel-tag">' + n.tagline + "</p></div>"
+    );
+  }
+
   function cardProducto(p) {
-    const feats = p.caracteristicas.slice(0, 3)
-      .map((f) => "<li>" + f + "</li>").join("");
-    const masFeats = p.caracteristicas.length > 3
-      ? '<li class="more">y ' + (p.caracteristicas.length - 3) + " funciones más…</li>"
-      : "";
-
-    const precioAntes = p.precioAntes
-      ? '<span class="price-before">' + formatPrecio(p.precioAntes) + "</span>"
-      : "";
-
     let acciones;
     if (p.estado === "proximamente") {
       acciones =
         '<a class="btn btn-ghost full" target="_blank" rel="noopener" href="' +
         waLink(msgAviso(p)) + '">🔔 Avísame cuando esté listo</a>';
     } else {
-      const linkCompra = p.linkPago || waLink(msgCompra(p));
       acciones =
-        '<button class="btn btn-ghost" data-detalle="' + p.id + '">Ver detalle</button>' +
-        '<a class="btn btn-buy" target="_blank" rel="noopener" href="' + linkCompra + '">Comprar</a>';
+        '<button class="btn btn-buy full" data-detalle="' + p.id + '">Ver planes y comprar</button>';
     }
 
     return (
@@ -142,11 +161,8 @@
       '<span class="mono-tag product-cat">' + p.categoria + "</span>" +
       "<h3>" + p.nombre + "</h3>" +
       '<p class="product-desc">' + p.descripcionCorta + "</p>" +
-      '<ul class="product-feats">' + feats + masFeats + "</ul>" +
+      '<div class="niveles-mini">' + p.niveles.map(nivelMini).join("") + "</div>" +
       '<div class="product-bottom">' +
-      '<div class="price-row"><span class="price">' + formatPrecio(p.precio) + "</span>" +
-      precioAntes +
-      '<span class="price-note">' + CONFIG.moneda + " · pago único</span></div>" +
       '<div class="product-actions">' + acciones + "</div>" +
       "</div></article>"
     );
@@ -164,6 +180,27 @@
 
   /* ---------- modal de detalle ---------- */
 
+  function planCard(p, n) {
+    const precioAntes = n.precioAntes
+      ? '<span class="price-before">' + formatPrecio(n.precioAntes) + "</span>"
+      : "";
+    const linkCompra = n.linkPago || waLink(msgCompra(p, n));
+    const feats = n.caracteristicas
+      .map((f) => "<li>" + f + "</li>")
+      .join("");
+    return (
+      '<div class="plan-card' + (n.tipo === "completo" ? " plan-premium" : "") + '">' +
+      '<div class="plan-head"><span class="plan-name">' + n.nombre + "</span>" +
+      '<span class="plan-tag">' + n.tagline + "</span></div>" +
+      '<div class="plan-price">' + precioAntes +
+      '<span class="price">' + formatPrecio(n.precio) + "</span>" +
+      '<span class="price-note">' + CONFIG.moneda + " · pago único</span></div>" +
+      '<ul class="plan-feats">' + feats + "</ul>" +
+      '<a class="btn btn-buy full" target="_blank" rel="noopener" href="' + linkCompra + '">Comprar ' + n.nombre + "</a>" +
+      "</div>"
+    );
+  }
+
   function abrirModal(id) {
     const p = PRODUCTOS.find((x) => x.id === id);
     if (!p) return;
@@ -174,11 +211,14 @@
         '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div>'
       : "";
 
-    const precioAntes = p.precioAntes
-      ? '<span class="price-before">' + formatPrecio(p.precioAntes) + "</span>"
+    const aviso = CONFIG.licenciaPorSerie
+      ? '<div class="serie-note"><span class="serie-ico">🔒</span><div><strong>Licencia por número de serie.</strong> El programa se activa solo para tu calculadora. Al comprar nos das el número de serie de tu TI-Nspire CX CAS (Ajustes → Estado).</div></div>'
       : "";
 
-    const linkCompra = p.linkPago || waLink(msgCompra(p));
+    const dg = CONFIG.descuentoGrupal;
+    const grupal = dg && dg.activo
+      ? '<p class="modal-grupal">👥 ' + dg.texto + "</p>"
+      : "";
 
     $("#modal-body").innerHTML =
       '<div class="modal-head">' +
@@ -189,19 +229,13 @@
       "</div></div>" +
       '<p class="modal-desc">' + p.descripcionLarga + "</p>" +
       video +
-      '<p class="modal-section-title">// Qué incluye</p>' +
-      '<ul class="modal-feats">' +
-      p.caracteristicas.map((f) => "<li>" + f + "</li>").join("") +
-      "</ul>" +
+      aviso +
+      '<p class="modal-section-title">// Elige tu plan</p>' +
+      '<div class="plan-grid">' + p.niveles.map((n) => planCard(p, n)).join("") + "</div>" +
+      grupal +
       '<p class="modal-section-title">// Te sirve para</p>' +
       '<div class="modal-ramos">' +
       p.ramos.map((r) => '<span class="ramo-chip">' + r + "</span>").join("") +
-      "</div>" +
-      '<div class="modal-buy">' +
-      '<div><div class="price-row"><span class="price">' + formatPrecio(p.precio) + "</span>" +
-      precioAntes + "</div>" +
-      '<span class="price-note">' + CONFIG.moneda + " · pago único · entrega el mismo día</span></div>" +
-      '<a class="btn btn-buy btn-lg" target="_blank" rel="noopener" href="' + linkCompra + '">Comprar ahora</a>' +
       "</div>";
 
     $("#modal").hidden = false;
